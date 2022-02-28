@@ -8,7 +8,7 @@ function ierg4210_DB() {
 	// Specifies that the fetch method shall return each row as an
 	// array indexed by column name as returned in the corresponding
 	// result set. If the result set contains multiple columns with
-	// the same name, PDO::FETCH_ASSOC returns only a single value
+    // the same name, PDO::FETCH_ASSOC returns only a single value
 	// per column name.
 
     $servername = "localhost";
@@ -96,8 +96,9 @@ function ierg4210_cat_insert() {
     global $db;
     $db = ierg4210_DB();
     if (!preg_match('/^[\w\- ]+$/', $_POST['name'])) {
-        throw new Exception("invalid-prod-name");
+        throw new Exception("invalid-cat-name");
     }
+
     $name = $_POST["name"];
 
     $sql="INSERT INTO categories (name) VALUES ('".$name."');";
@@ -108,10 +109,36 @@ function ierg4210_cat_insert() {
 
 }
 function ierg4210_cat_edit(){
+    global $db;
+    $db = ierg4210_DB();
+    if (!preg_match('/^[\w\- ]+$/', $_POST["name"])) {
+        throw new Exception("invalid-cat-name");
+    }
+    $_POST['catid'] = (int) $_POST['catid'];
+    if (!preg_match('/^[\w\- ]+$/', $_POST['name']))
+        throw new Exception("invalid-name");
 
+    $name = $_POST["name"];
+    $catid = $_POST["catid"];
+    $sql = "UPDATE categories SET name = ('".$name."') WHERE catid = ('".$catid."');";
+    if ($db->query($sql) === TRUE) {
+        echo "update succ";
+        return 1;
+    }
 }
 function ierg4210_cat_delete(){
+    global $db;
+    $db = ierg4210_DB();
+    $_POST['catid'] = (int) $_POST['catid'];
+    if (!preg_match('/^[\w\- ]+$/', $_POST['name']))
+        throw new Exception("invalid-name");
 
+    $catid = $_POST["catid"];
+    $sql = "DELETE FROM categories WHERE catid = ('".$catid."');";
+    if ($db-query($sql) === TRUE) {
+        echo "delete succ";
+        return 1;
+    }
 }
 function ierg4210_prod_delete_by_catid(){
 
@@ -134,6 +161,17 @@ function ierg4210_prod_edit(){
 
 }
 function ierg4210_prod_delete(){
+    global $db;
+    $db = ierg4210_DB();
+    $_POST['pid'] = (int) $_POST['pid'];
+    if (!preg_match('/^[\w\- ]+$/', $_POST['name']))
+        throw new Exception("invalid-name");
 
+    $pid = $_POST["pid"];
+    $sql = "DELETE FROM products WHERE pid = ('".$pid."');";
+    if ($db-query($sql) === TRUE) {
+        echo "delete succ";
+        return 1;
+    }
 }
 
