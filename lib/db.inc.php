@@ -95,6 +95,7 @@ function ierg4210_prod_insert() {
 function ierg4210_cat_insert() {
     global $db;
     $db = ierg4210_DB();
+
     if (!preg_match('/^[\w\- ]+$/', $_POST['name'])) {
         throw new Exception("invalid-cat-name");
     }
@@ -155,21 +156,62 @@ function ierg4210_prod_fetchAll(){
     }
 }
 function ierg4210_prod_fetchOne(){
+    global $db;
+    $db = ierg4210_DB();
+    if (!preg_match('/^\d*$/', $_POST['pid']))
+        throw new Exception("invalid-pid");
+    $_POST['pid'] = (int) $_POST['pid'];
+
+    $pid = $_POST["pid"];
+    $sql = "SELECT * FROM WHERE pid = ('".$pid ."');";
+    $result = $db->query($sql);
+    if ($result->num_rows > 0) {
+        //如果return $result->fetch_array()会有问题（admin.php会无限循环）不过我还没找到是什么原因
+        return $result;
+    }
+
 
 }
 function ierg4210_prod_edit(){
+    global $db;
+    $db = ierg4210_DB();
+    if (!preg_match('/^\d*$/', $_POST['pid']))
+        throw new Exception("invalid-pid");
+    $_POST['pid'] = (int) $_POST['pid'];
+    if (!preg_match('/^\d*$/', $_POST['catid']))
+        throw new Exception("invalid-catid");
+    $_POST['catid'] = (int) $_POST['catid'];
+    if (!preg_match('/^[\w\- ]+$/', $_POST['name']))
+        throw new Exception("invalid-name");
 
+    if (!preg_match('/^[\d\.]+$/', $_POST['price']))
+        throw new Exception("invalid-price");
+    if (!preg_match('/^[\w\- ]+$/', $_POST['description']))
+        throw new Exception("invalid-textt");
+
+    $pid = $_POST["pid"];
+    $catid = $_POST["catid"];
+    $name = $_POST["name"];
+    $price = $_POST["price"];
+    $desc = $_POST["description"];
+
+    $sql = "UPDATE products SET catid = ('".$catid."'), 
+    name = ('".$name."'), price = ('".$price."'), description = ('".$desc."') WHERE pid = ('".$pid."');";
+    if ($db->query($sql) === TRUE) {
+        echo "update succ";
+        return 1;
+    }
 }
 function ierg4210_prod_delete(){
     global $db;
     $db = ierg4210_DB();
+    if (!preg_match('/^\d*$/', $_POST['pid']))
+        throw new Exception("invalid-pid");
     $_POST['pid'] = (int) $_POST['pid'];
-    if (!preg_match('/^[\w\- ]+$/', $_POST['name']))
-        throw new Exception("invalid-name");
 
     $pid = $_POST["pid"];
     $sql = "DELETE FROM products WHERE pid = ('".$pid."');";
-    if ($db-query($sql) === TRUE) {
+    if ($db->query($sql) === TRUE) {
         echo "delete succ";
         return 1;
     }
