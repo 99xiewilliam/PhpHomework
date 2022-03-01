@@ -99,5 +99,14 @@ while ($value = $res->fetch_array()) {
                 <input type="submit" value="Submit" />
             </form>
         </fieldset>
+        <fieldset>
+            <legend> Delete ProductByCatId</legend>
+            <form id="prod_delete" method="POST" action="admin-process.php?action=prod_delete"
+                  enctype="multipart/form-data">
+                <label for="cate_id"> catId</label>
+                <div> <input id="cate_id" type="text" name="catid" required="required" pattern="^\d+\.?\d*$"/></div>
+                <input type="submit" value="Submit" />
+            </form>
+        </fieldset>
     </fieldset>
 </html>

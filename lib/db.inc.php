@@ -22,6 +22,7 @@ function ierg4210_DB() {
 
 	return $db;
 }
+
 //完成
 function ierg4210_cat_fetchall() {
     // DB manipulation
@@ -109,6 +110,7 @@ function ierg4210_cat_insert() {
     }
 
 }
+
 function ierg4210_cat_edit(){
     global $db;
     $db = ierg4210_DB();
@@ -127,6 +129,7 @@ function ierg4210_cat_edit(){
         return 1;
     }
 }
+
 function ierg4210_cat_delete(){
     global $db;
     $db = ierg4210_DB();
@@ -141,7 +144,22 @@ function ierg4210_cat_delete(){
         return 1;
     }
 }
+
 function ierg4210_prod_delete_by_catid(){
+    global $db;
+    $db = ierg4210_DB();
+
+    if (!preg_match('/^\d*$/', $_POST['catid']))
+        throw new Exception("invalid-catid");
+    $_POST['catid'] = (int) $_POST['catid'];
+
+    $catid = $_POST["catid"];
+
+    $sql = "DELETE FROM products WHERE $catid = ('".$catid."');";
+    if ($db->query($sql) === TRUE) {
+        echo "delete succ";
+        return 1;
+    }
 
 }
 //完成
@@ -155,6 +173,7 @@ function ierg4210_prod_fetchAll(){
         return $result;
     }
 }
+
 function ierg4210_prod_fetchOne(){
     global $db;
     $db = ierg4210_DB();
@@ -169,9 +188,8 @@ function ierg4210_prod_fetchOne(){
         //如果return $result->fetch_array()会有问题（admin.php会无限循环）不过我还没找到是什么原因
         return $result;
     }
-
-
 }
+
 function ierg4210_prod_edit(){
     global $db;
     $db = ierg4210_DB();
@@ -202,6 +220,7 @@ function ierg4210_prod_edit(){
         return 1;
     }
 }
+
 function ierg4210_prod_delete(){
     global $db;
     $db = ierg4210_DB();
