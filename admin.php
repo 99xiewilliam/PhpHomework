@@ -65,7 +65,7 @@ while ($value = $res->fetch_array()) {
                 <label for="prod_price"> Price *</label>
                 <div> <input id="prod_price" type="text" name="price" required="required" pattern="^\d+\.?\d*$"/></div>
                 <label for="prod_desc"> Description *</label>
-                <div> <textarea id="prod_desc" name="desc" rows="5" cols="33"></textarea> </div>
+                <div> <textarea id="prod_description" name="description" rows="5" cols="33"></textarea> </div>
                 <label for="prod_image"> Image * </label>
                 <div> <input type="file" name="file" required="true" accept="image/jpeg"/> </div>
                 <input type="submit" value="Submit"/>
@@ -84,9 +84,9 @@ while ($value = $res->fetch_array()) {
                 <label for="prod_price"> Price *</label>
                 <div> <input id="prod_price" type="text" name="price" required="required" pattern="^\d+\.?\d*$"/></div>
                 <label for="prod_desc"> Description *</label>
-                <div> <textarea id="prod_desc" name="desc" rows="5" cols="33"></textarea> </div>
-                <label for="prod_image"> Image * </label>
-                <div> <input type="file" name="file" required="true" accept="image/jpeg"/> </div>
+                <div> <textarea id="prod_description" name="description" rows="5" cols="33"></textarea> </div>
+<!--                <label for="prod_image"> Image * </label>-->
+<!--                <div> <input type="file" name="file" required="true" accept="image/jpeg"/> </div>-->
                 <input type="submit" value="Submit"/>
             </form>
         </fieldset>
@@ -101,7 +101,7 @@ while ($value = $res->fetch_array()) {
         </fieldset>
         <fieldset>
             <legend> Delete ProductByCatId</legend>
-            <form id="prod_delete" method="POST" action="admin-process.php?action=prod_delete"
+            <form id="prod_delete" method="POST" action="admin-process.php?action=prod_delete_by_catid"
                   enctype="multipart/form-data">
                 <label for="cate_id"> catId</label>
                 <div> <input id="cate_id" type="text" name="catid" required="required" pattern="^\d+\.?\d*$"/></div>

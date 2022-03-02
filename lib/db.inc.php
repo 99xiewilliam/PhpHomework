@@ -12,13 +12,14 @@ function ierg4210_DB() {
 	// per column name.
 
     $servername = "localhost";
-    $username = "xiaohao";
+    $username = "root";
     $password = "123456";
     $dbname = "store";
     $db = new mysqli($servername, $username, $password, $dbname);
     if ($db->connect_error) {
         die("Connection failed");
     }
+
 
 	return $db;
 }
@@ -60,25 +61,33 @@ function ierg4210_prod_insert() {
 //    $q = $db->prepare($sql);
 
     // Copy the uploaded file to a folder which can be publicly accessible at incl/img/[pid].jpg
+    echo $_FILES["file"]["error"] ."<br>";
+    echo $_FILES["file"]["type"]."<br>";
+    echo mime_content_type($_FILES["file"]["tmp_name"])."<br>";
+    echo $_FILES["file"]["size"]."<br>";
+    echo $_FILES["file"]["tmp_name"];
     if ($_FILES["file"]["error"] == 0
         && $_FILES["file"]["type"] == "image/jpeg"
-        && mime_content_type($_FILES["file"]["tmp_name"]) == "image/jpeg"
+        && mime_content_type($_FILES["file"]["tmp_name"]) == "image/png"
         && $_FILES["file"]["size"] < 5000000) {
         $catid = $_POST["catid"];
         $name = $_POST["name"];
         $price = $_POST["price"];
         $desc = $_POST["description"];
-        $sql="INSERT INTO products (catid, name, price, description) VALUES (?, ?, ?, ?);";
-        $q = $db->prepare($sql);
-        $q->bindParam(1, $catid);
-        $q->bindParam(2, $name);
-        $q->bindParam(3, $price);
-        $q->bindParam(4, $desc);
-        $q->execute();
-        $lastId = $db->lastInsertId();
+        $sql="INSERT INTO products 
+    (catid, name, price, description) VALUES ('".$catid."', '".$name."', '".$price."', '".$desc."');";
+        echo $sql;
+        $q = $db->query($sql);
+
+//        $q->bindParam(1, $catid);
+//        $q->bindParam(2, $name);
+//        $q->bindParam(3, $price);
+//        $q->bindParam(4, $desc);
+//        $q->execute();
+        $lastId = $db->insert_id;
 
         // Note: Take care of the permission of destination folder (hints: current user is apache)
-        if (move_uploaded_file($_FILES["file"]["tmp_name"], "/var/www/html/admin/lib/images/" . $lastId . ".jpg")) {
+        if (move_uploaded_file($_FILES["file"]["tmp_name"], "/var/www/html/IERG4210_Homeword1_1155162650/templates/lib/images/" . $lastId . ".jpg")) {
             // redirect back to original page; you may comment it during debug
             header('Location: admin.php');
             exit();
@@ -124,6 +133,7 @@ function ierg4210_cat_edit(){
     $name = $_POST["name"];
     $catid = $_POST["catid"];
     $sql = "UPDATE categories SET name = ('".$name."') WHERE catid = ('".$catid."');";
+
     if ($db->query($sql) === TRUE) {
         echo "update succ";
         return 1;
@@ -133,13 +143,14 @@ function ierg4210_cat_edit(){
 function ierg4210_cat_delete(){
     global $db;
     $db = ierg4210_DB();
+
+    if (!preg_match('/^\d*$/', $_POST['catid']))
+        throw new Exception("invalid-catid");
     $_POST['catid'] = (int) $_POST['catid'];
-    if (!preg_match('/^[\w\- ]+$/', $_POST['name']))
-        throw new Exception("invalid-name");
 
     $catid = $_POST["catid"];
     $sql = "DELETE FROM categories WHERE catid = ('".$catid."');";
-    if ($db-query($sql) === TRUE) {
+    if ($db->query($sql) === TRUE) {
         echo "delete succ";
         return 1;
     }
@@ -155,7 +166,7 @@ function ierg4210_prod_delete_by_catid(){
 
     $catid = $_POST["catid"];
 
-    $sql = "DELETE FROM products WHERE $catid = ('".$catid."');";
+    $sql = "DELETE FROM products WHERE catid = ('".$catid."');";
     if ($db->query($sql) === TRUE) {
         echo "delete succ";
         return 1;
