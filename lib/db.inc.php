@@ -68,7 +68,7 @@ function ierg4210_prod_insert() {
     echo $_FILES["file"]["tmp_name"];
     if ($_FILES["file"]["error"] == 0
         && $_FILES["file"]["type"] == "image/jpeg"
-        && mime_content_type($_FILES["file"]["tmp_name"]) == "image/png"
+        && mime_content_type($_FILES["file"]["tmp_name"]) == "image/jpeg"
         && $_FILES["file"]["size"] < 5000000) {
         $catid = $_POST["catid"];
         $name = $_POST["name"];
@@ -170,6 +170,22 @@ function ierg4210_prod_delete_by_catid(){
     if ($db->query($sql) === TRUE) {
         echo "delete succ";
         return 1;
+    }
+
+}
+function ierg4210_prod_fetchall_by_catid($catid){
+    global $db;
+    $db = ierg4210_DB();
+
+    if (!preg_match('/^\d*$/', $catid))
+        throw new Exception("invalid-catid");
+    $catid = (int) $catid;
+
+    $sql = "SELECT * FROM products WHERE catid = ('".$catid."');";
+    $result = $db->query($sql);
+    if ($result->num_rows > 0) {
+        //如果return $result->fetch_array()会有问题（admin.php会无限循环）不过我还没找到是什么原因
+        return $result;
     }
 
 }

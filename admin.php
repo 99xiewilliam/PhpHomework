@@ -16,6 +16,8 @@ $options = '';
 while ($value = $res->fetch_array()) {
     $options .= '<option value="'.$value["catid"].'"> '.$value["name"].' </option>';
 }
+
+
 //while ($row = $res) {
 //    echo $row . "<br>";
 //}
