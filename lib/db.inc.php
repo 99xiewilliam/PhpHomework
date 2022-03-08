@@ -61,11 +61,7 @@ function ierg4210_prod_insert() {
 //    $q = $db->prepare($sql);
 
     // Copy the uploaded file to a folder which can be publicly accessible at incl/img/[pid].jpg
-    echo $_FILES["file"]["error"] ."<br>";
-    echo $_FILES["file"]["type"]."<br>";
-    echo mime_content_type($_FILES["file"]["tmp_name"])."<br>";
-    echo $_FILES["file"]["size"]."<br>";
-    echo $_FILES["file"]["tmp_name"];
+
     if ($_FILES["file"]["error"] == 0
         && $_FILES["file"]["type"] == "image/jpeg"
         && mime_content_type($_FILES["file"]["tmp_name"]) == "image/jpeg"
@@ -85,11 +81,19 @@ function ierg4210_prod_insert() {
 //        $q->bindParam(4, $desc);
 //        $q->execute();
         $lastId = $db->insert_id;
+//        $file = $_FILES["upfile"];
+//        $filename = $file["tmp_name"];
+//        $image_size = getimagesize($filename);
+//        $imgpreviewsize = 1 / 1;
+
 
         // Note: Take care of the permission of destination folder (hints: current user is apache)
         if (move_uploaded_file($_FILES["file"]["tmp_name"], "/var/www/html/IERG4210_Homeword1_1155162650/templates/lib/images/" . $lastId . ".jpg")) {
+//            $code = "<a href=/var/www/html/IERG4210_Homeword1_1155162650/templates/lib/images/" . $lastId . ".jpg target='_blank'><img src=/var/www/html/IERG4210_Homeword1_1155162650/templates/lib/images/" . $lastId . ".jpg width=".($image_size[0]*$imgpreviewsize)." height=".($image_size[1]*$imgpreviewsize);
+//            echo $code;
             // redirect back to original page; you may comment it during debug
             header('Location: admin.php');
+
             exit();
         }
     }
@@ -183,10 +187,11 @@ function ierg4210_prod_fetchall_by_catid($catid){
 
     $sql = "SELECT * FROM products WHERE catid = ('".$catid."');";
     $result = $db->query($sql);
-    if ($result->num_rows > 0) {
-        //如果return $result->fetch_array()会有问题（admin.php会无限循环）不过我还没找到是什么原因
-        return $result;
-    }
+    return $result;
+//    if ($result->num_rows > 0) {
+//        //如果return $result->fetch_array()会有问题（admin.php会无限循环）不过我还没找到是什么原因
+//        return $result;
+//    }
 
 }
 //完成
@@ -201,15 +206,15 @@ function ierg4210_prod_fetchAll(){
     }
 }
 
-function ierg4210_prod_fetchOne(){
+function ierg4210_prod_fetchOne($pid){
     global $db;
     $db = ierg4210_DB();
-    if (!preg_match('/^\d*$/', $_POST['pid']))
+    if (!preg_match('/^\d*$/', $pid))
         throw new Exception("invalid-pid");
-    $_POST['pid'] = (int) $_POST['pid'];
+    $pid = (int) $pid;
 
-    $pid = $_POST["pid"];
-    $sql = "SELECT * FROM WHERE pid = ('".$pid ."');";
+//    $pid = $_POST["pid"];
+    $sql = "SELECT * FROM products WHERE pid = ('".$pid."');";
     $result = $db->query($sql);
     if ($result->num_rows > 0) {
         //如果return $result->fetch_array()会有问题（admin.php会无限循环）不过我还没找到是什么原因
@@ -262,4 +267,51 @@ function ierg4210_prod_delete(){
         return 1;
     }
 }
+
+//function thumb($file,$dw,$dh,$path){//这四个参数分别是1、要缩略的图片，2、画布的宽（也就是你要缩略的宽）3、画布的高（也就是你要缩略的高），4、保存路径）
+//    //获取用户名图
+//    $srcImg = getImg($file);//调用下面那个函数，实现根据图片类型来创建不同的图片画布
+//    //获取原图的宽高
+//    $infoSrc = getimagesize($file);//这个getimagesize()是php里面的系统函数用来获取图片的具体信息的
+//    $sw = $infoSrc[0];//获取要缩略图片的宽
+//    $sh = $infoSrc[1]; //获取要缩略的图片的高
+//    //创建缩略图画布
+//    $destImg = imagecreatetruecolor($dw, $dh);
+//    //为缩略图填充背景色
+//    $bg = imagecolorallocate($destImg,250,250,250);
+//    imagefill($destImg,0,0,$bg);
+//    //计算例缩放的尺寸
+//    if($dh/$dw>$sh/$sw){
+//        $fw=$dw;
+//        $fh=$sh/$sw*$fw;
+//    }else{
+//        $fh=$dh;
+//        $fw=$fh*$sw/$sh;
+//    }
+//    //居中放置
+//    $dx=($dw-$fw)/2;
+//    $dy=($dh-$fh)/2;
+//    //创建缩略图
+//    imagecopyresampled($destImg, $srcImg, 0, 0, 0, 0 ,$fw, $fh,$sw, $sh);
+//    $baseName='thumb_'.basename($file);//给缩略的图片命名，basename()是系统内置函数用来获取后缀名的
+//    $savePath=$path.'/'.$baseName;//设置缩略图片保存路径
+//    imagejpeg($destImg,$savePath);//把缩略图存放到上一步设置的保存路径里
+//
+//}
+//function getImg($file){//这是以一个动态创建图片画布的函数（根据具体的图片类型创相应类型的画布）
+//    $info=getimagesize($file);
+//    $fn=$info['mime'];//获得图片类型；
+//    switch($fn){
+//        case 'image/jpeg'://如果类型是imag/jpeg就创建jpeg类型的画布
+//            $img=imagecreatefromjpeg($file);
+//            break;
+//        case 'image/gif':
+//            $img=imagecreatefromgif($file);//如果类型是gif就创建gif类型的画布
+//        case 'image/png':
+//            $img=imagecreatefrompng($file);//如果类型是png就创建png类型的画布
+//            break;
+//
+//    }
+//    return $img;//返回画布类型
+//}
 
