@@ -14,6 +14,8 @@ function showNaviSubItems(divObj) {
     divObj.getElementsByTagName("div")[0].style.display = "block";
 }
 
+
+
 /*
  * Demo1:选取一张图片，并预览
  */
