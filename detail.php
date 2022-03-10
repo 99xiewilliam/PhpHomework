@@ -183,7 +183,7 @@ $detail = '<h1><span>'.$name.'</span><b>'.$description.'</b></h1>
                 </div>
             </li>
             <li id="choose_btns" class="clear">
-                <input type="button" value="add to cart">
+                <input type="button" value="add to cart" onclick="addCart()">
             </li>
         </ul>
     </div>
