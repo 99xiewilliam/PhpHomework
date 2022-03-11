@@ -50,8 +50,10 @@ while ($index < count($arr_id)) {
     <title>Home</title>
     <meta http-equiv="content-type" content="text/html;charset=utf-8" />
     <link rel="stylesheet" href="../static/css/common.css" />
-    <script type="text/javascript" src="../static/js/function.js"></script>
+    <link rel="stylesheet" href="../static/css/jquery.pagination.css" />
     <script type="text/javascript" src="../static/js/jquery.min.js"></script>
+    <script type="text/javascript" src="../static/js/function.js"></script>
+    <script type="text/javascript" src="../static/js/jquery.pagination.js"></script>
 </head>
 <body>
 <div id="top">
@@ -105,7 +107,7 @@ while ($index < count($arr_id)) {
             <div class="product-iWrap">
                 <!--page-->
                 <div class="productImg-wrap">
-                    <a class="productImg" href="../templates/detail.html">
+                    <a class="productImg" href="../templates/detail.php">
                         <img src="https://img13.360buyimg.com/n1/s200x200_jfs/t1/186038/9/7947/120952/60bdd993E41eea7e2/48ab930455d7381b.jpg">
                     </a>
                 </div>
@@ -124,7 +126,7 @@ while ($index < count($arr_id)) {
             <div class="product-iWrap">
                 <!--page-->
                 <div class="productImg-wrap">
-                    <a class="productImg" href="../templates/detail.html">
+                    <a class="productImg" href="../templates/detail.php">
                         <img src="https://img13.360buyimg.com/n1/s200x200_jfs/t1/186038/9/7947/120952/60bdd993E41eea7e2/48ab930455d7381b.jpg">
                     </a>
                 </div>
@@ -141,10 +143,12 @@ while ($index < count($arr_id)) {
 
             </div>
         </div>
-
-
     </div>
+    <div class="pagination"></div>
 </div>
+<script>
+    $('.pagination').pagination();
+</script>
 </body>
 </html>
 

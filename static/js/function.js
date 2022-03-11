@@ -6,7 +6,7 @@ function myfunction() {
         let key = localStorage.key(i);
         let obj = JSON.parse(localStorage.getItem(key));
         let div = document.createElement("div");
-        let info = "<div>"+ obj["name"] + '[ ' + obj["count"]
+        let info = "<div>"+ obj["name"] + '[' + obj["count"]
             + ']' + '¥' + obj["price"] + "</div>";
         div.innerHTML = info;
         sumPrice += parseInt(obj["price"]) * parseInt(obj["count"]);
@@ -58,7 +58,7 @@ function addCart() {
                 let goods = document.getElementById("no_goods");
                 let div = document.createElement("div");
                 let info = "<div>"+ data["name"] + '[' + data["count"]
-                    + ']' + '¥' + data["price"] + "</div>";
+                    + ']' + '¥' + data["price"] + "</div>" ;
                 div.innerHTML = info;
                 goods.appendChild(div);
             },
@@ -68,6 +68,37 @@ function addCart() {
         })
     }
 }
+
+function upValue() {
+    let ele = document.getElementById("itemNum");
+    ele.value = parseInt(ele.value) + 1;
+}
+
+function downValue() {
+    let ele = document.getElementById("itemNum");
+    if (parseInt(ele.value) > 0) {
+        ele.value = parseInt(ele.value) - 1;
+    }
+}
+
+function decreaseOne() {
+    let pid = "14";
+    if (localStorage.getItem(pid) != null) {
+        let obj = JSON.parse(localStorage.getItem(pid));
+        let num = parseInt(obj["count"]);
+        let addNum = 1;
+        if (num > 0) {
+            num -= addNum;
+        }
+        obj["count"] = num.toString();
+        localStorage.setItem(pid, JSON.stringify(obj));
+        if (num == 0) {
+            localStorage.removeItem(pid);
+        }
+        myfunction();
+    }
+}
+
 
 ///*
 // * Demo1:选取一张图片，并预览

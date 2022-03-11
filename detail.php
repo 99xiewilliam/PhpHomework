@@ -153,14 +153,16 @@ $detail = '<h1><span>'.$name.'</span><b>'.$description.'</b></h1>
             <li id="choose_amount">
                 <div class="title">numbers：</div>
                 <div class="content">
-                    <a href="#" class="btn_reduce"></a>
+                    <a href="#" class="btn_reduce" onclick="downValue()"></a>
                     <input type="text" value="1" id="itemNum" />
-                    <a href="#" class="btn_add"></a>
+                    <a href="#" class="btn_add" onclick="upValue()"></a>
                 </div>
             </li>
             <li id="choose_btns" class="clear">
                 <input type="button" value="add to cart" onclick="addCart()">
+                <input type="button" value="decrease one" onclick="decreaseOne()">
             </li>
+
         </ul>
     </div>
 
