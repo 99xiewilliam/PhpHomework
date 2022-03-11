@@ -9,6 +9,7 @@ while ($value = $res->fetch_array()) {
     $name = $value["name"];
     $price = $value["price"];
 }
-$data = '{"pid":"'.$pid.'", "name":"'.$name.'", "price":"'.$price.'"}';
+$num = 1;
+$data = '{"pid":"'.$pid.'","name":"'.$name.'","price":"'.$price.'","count":"'.$num.'"}';
 echo json_encode($data);
 ?>

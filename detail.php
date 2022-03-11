@@ -35,6 +35,7 @@ $detail = '<h1><span>'.$name.'</span><b>'.$description.'</b></h1>
     <title>details</title>
     <meta http-equiv="content-type" content="text/html;charset=utf-8" />
     <link rel="stylesheet" href="../static/css/common.css" />
+    <script type="text/javascript" src="../static/js/jquery.min.js"></script>
     <script type="text/javascript" src="../static/js/function.js"></script>
 </head>
 <body>
@@ -56,8 +57,8 @@ $detail = '<h1><span>'.$name.'</span><b>'.$description.'</b></h1>
                 Shopping List (Total:¥25000)
                 <div>-Prod2   [1] @¥12500</div>
                 <div>-Prod3   [2] @¥12500</div>
-                <input type="button" value="check out">
             </div>
+            <input type="button" value="check out">
         </div>
     </div>
 </div>
@@ -154,7 +155,7 @@ $detail = '<h1><span>'.$name.'</span><b>'.$description.'</b></h1>
                 <div class="title">numbers：</div>
                 <div class="content">
                     <a href="#" class="btn_reduce"></a>
-                    <input type="text" value="1" />
+                    <input type="text" value="1" id="itemNum" />
                     <a href="#" class="btn_add"></a>
                 </div>
             </li>
