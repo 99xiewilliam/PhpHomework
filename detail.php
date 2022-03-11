@@ -38,7 +38,7 @@ $detail = '<h1><span>'.$name.'</span><b>'.$description.'</b></h1>
     <script type="text/javascript" src="../static/js/jquery.min.js"></script>
     <script type="text/javascript" src="../static/js/function.js"></script>
 </head>
-<body>
+<body onload="myfunction()">
 <div id="top">
 
 </div>
@@ -52,11 +52,10 @@ $detail = '<h1><span>'.$name.'</span><b>'.$description.'</b></h1>
             <b></b>
         </div>
         <div id="settle_up_items" onmouseover="showElementById('settle_up_items', true);" onmouseout="showElementById('settle_up_items',false);">
+            <div id="sumPrice">Total Price: </div>
             <div id="no_goods">
-                <b></b>
-                Shopping List (Total:¥25000)
-                <div>-Prod2   [1] @¥12500</div>
-                <div>-Prod3   [2] @¥12500</div>
+<!--                <div>-Prod2   [1] @¥12500</div>-->
+<!--                <div>-Prod3   [2] @¥12500</div>-->
             </div>
             <input type="button" value="check out">
         </div>
