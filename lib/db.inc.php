@@ -216,10 +216,11 @@ function ierg4210_prod_fetchOne($pid){
 //    $pid = $_POST["pid"];
     $sql = "SELECT * FROM products WHERE pid = ('".$pid."');";
     $result = $db->query($sql);
-    if ($result->num_rows > 0) {
-        //如果return $result->fetch_array()会有问题（admin.php会无限循环）不过我还没找到是什么原因
-        return $result;
-    }
+    return $result;
+//    if ($result->num_rows > 0) {
+//        //如果return $result->fetch_array()会有问题（admin.php会无限循环）不过我还没找到是什么原因
+//        return $result;
+//    }
 }
 
 function ierg4210_prod_edit(){

@@ -47,7 +47,7 @@ $detail = '<h1><span>'.$name.'</span><b>'.$description.'</b></h1>
 <div id="top_main">
     <div id="settle_up" class="lr">
         <div class="settle_up_mt" onmouseover="showElementById('settle_up_items', true);" onmouseout="showElementById('settle_up_items',false);">
-            shopping car ¥25000
+            shopping car
             <b></b>
         </div>
         <div id="settle_up_items" onmouseover="showElementById('settle_up_items', true);" onmouseout="showElementById('settle_up_items',false);">
@@ -73,27 +73,11 @@ $detail = '<h1><span>'.$name.'</span><b>'.$description.'</b></h1>
             <div class="cate_item" onmouseover="showNaviSubItems(this);">
                 <h3>
                     <a href="#">books</a>
-                    <a href="#">music</a>
-                    <a href="#">art</a>
                 </h3>
                 <div class="sub_cate_box">
                     <div class="sub_cate_items">
                         <div>
                             <a href="#">books</a>
-                            <p>
-                                <a href="#">123</a>
-                                <a href="#">456</a>
-                            </p>
-                        </div>
-                        <div>
-                            <a href="#">music</a>
-                            <p>
-                                <a href="#">123</a>
-                                <a href="#">456</a>
-                            </p>
-                        </div>
-                        <div>
-                            <a href="#">art</a>
                             <p>
                                 <a href="#">123</a>
                                 <a href="#">456</a>
@@ -106,7 +90,6 @@ $detail = '<h1><span>'.$name.'</span><b>'.$description.'</b></h1>
             <div class="cate_item" onmouseover="showNaviSubItems(this);">
                 <h3>
                     <a href="#">phone</a>
-
                 </h3>
                 <div class="sub_cate_box">
                     <div class="sub_cate_items">
@@ -119,13 +102,6 @@ $detail = '<h1><span>'.$name.'</span><b>'.$description.'</b></h1>
                         </div>
                         <div>
                             <a href="#">huawei</a>
-                            <p>
-                                <a href="#">123</a>
-                                <a href="#">456</a>
-                            </p>
-                        </div>
-                        <div>
-                            <a href="#">oppo</a>
                             <p>
                                 <a href="#">123</a>
                                 <a href="#">456</a>
