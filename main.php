@@ -34,6 +34,28 @@ while ($index < count($arr_id)) {
         $products .= '<div>
                                     <a href="#">'.$value1["name"].'</a>
                                 </div>';
+
+        $products_detail .= '
+        <div class="product">
+            <div class="product-iWrap">
+                <!--page-->
+                <div class="productImg-wrap">
+                    <a class="productImg" href="./detail.php">
+                        <img src="/static/images/'. $value1["pid"] .'.jpg">
+                    </a>
+                </div>
+                <!--price-->
+                <p class="productPrice">
+                    <em><b>¥</b>'.$value1["price"].'</em>
+                </p>
+                <!--title-->
+                <p class="productTitle">
+                    <a href="./detail.html"> '.$value1["name"].' </a>
+                </p>
+<!--                <input type="button" value="add cart" class="productStatus">-->
+            </div>
+        </div>
+        ';
     }
 
 
@@ -49,11 +71,11 @@ while ($index < count($arr_id)) {
 <head>
     <title>Home</title>
     <meta http-equiv="content-type" content="text/html;charset=utf-8" />
-    <link rel="stylesheet" href="../static/css/common.css" />
-    <link rel="stylesheet" href="../static/css/jquery.pagination.css" />
-    <script type="text/javascript" src="../static/js/jquery.min.js"></script>
-    <script type="text/javascript" src="../static/js/function.js"></script>
-    <script type="text/javascript" src="../static/js/jquery.pagination.js"></script>
+    <link rel="stylesheet" href="./static/css/common.css" />
+    <link rel="stylesheet" href="./static/css/jquery.pagination.css" />
+    <script type="text/javascript" src="./static/js/jquery.min.js"></script>
+    <script type="text/javascript" src="./static/js/function.js"></script>
+    <script type="text/javascript" src="./static/js/jquery.pagination.js"></script>
 </head>
 <body>
 <div id="top">
@@ -65,17 +87,14 @@ while ($index < count($arr_id)) {
 <div id="top_main">
     <div id="settle_up" class="lr">
         <div class="settle_up_mt" onmouseover="showElementById('settle_up_items', true);" onmouseout="showElementById('settle_up_items',false);">
-            shopping car ¥25000
+            shopping car
             <b></b>
         </div>
         <div id="settle_up_items" onmouseover="showElementById('settle_up_items', true);" onmouseout="showElementById('settle_up_items',false);">
+            <div id="sumPrice">Total Price: </div>
             <div id="no_goods">
-                <b></b>
-                Shopping List (Total:¥25000)
-                <div>-Prod2   [1] @¥12500</div>
-                <div>-Prod3   [2] @¥12500</div>
-                <input type="button" value="check out">
             </div>
+            <input type="button" value="check out">
         </div>
     </div>
 </div>
@@ -103,46 +122,7 @@ while ($index < count($arr_id)) {
     </div>
     <div class="view grid-nosku">
 
-        <div class="product">
-            <div class="product-iWrap">
-                <!--page-->
-                <div class="productImg-wrap">
-                    <a class="productImg" href="../templates/detail.php">
-                        <img src="https://img13.360buyimg.com/n1/s200x200_jfs/t1/186038/9/7947/120952/60bdd993E41eea7e2/48ab930455d7381b.jpg">
-                    </a>
-                </div>
-                <!--price-->
-                <p class="productPrice">
-                    <em><b>¥</b>25.00</em>
-                </p>
-                <!--title-->
-                <p class="productTitle">
-                    <a href="../templates/detail.html"> java </a>
-                </p>
-                <input type="button" value="add cart" class="productStatus">
-            </div>
-        </div>
-        <div class="product">
-            <div class="product-iWrap">
-                <!--page-->
-                <div class="productImg-wrap">
-                    <a class="productImg" href="../templates/detail.php">
-                        <img src="https://img13.360buyimg.com/n1/s200x200_jfs/t1/186038/9/7947/120952/60bdd993E41eea7e2/48ab930455d7381b.jpg">
-                    </a>
-                </div>
-                <!--price-->
-                <p class="productPrice">
-                    <em><b>¥</b>25.00</em>
-                </p>
-                <!--title-->
-                <p class="productTitle">
-                    <a href="../templates/detail.html"> java </a>
-                </p>
-
-                <input type="button" value="add cart" class="productStatus">
-
-            </div>
-        </div>
+        <?php echo $products_detail; ?>
     </div>
     <div class="pagination"></div>
 </div>

@@ -88,7 +88,7 @@ function ierg4210_prod_insert() {
 
 
         // Note: Take care of the permission of destination folder (hints: current user is apache)
-        if (move_uploaded_file($_FILES["file"]["tmp_name"], "/var/www/html/IERG4210_Homeword1_1155162650/templates/lib/images/" . $lastId . ".jpg")) {
+        if (move_uploaded_file($_FILES["file"]["tmp_name"], "/var/www/html/static/images/" . $lastId . ".jpg")) {
 //            $code = "<a href=/var/www/html/IERG4210_Homeword1_1155162650/templates/lib/images/" . $lastId . ".jpg target='_blank'><img src=/var/www/html/IERG4210_Homeword1_1155162650/templates/lib/images/" . $lastId . ".jpg width=".($image_size[0]*$imgpreviewsize)." height=".($image_size[1]*$imgpreviewsize);
 //            echo $code;
             // redirect back to original page; you may comment it during debug

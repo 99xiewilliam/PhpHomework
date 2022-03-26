@@ -1,6 +1,6 @@
 <?php
 require __DIR__.'/lib/db.inc.php';
-$res = ierg4210_prod_fetchOne(14);
+$res = ierg4210_prod_fetchOne(21);
 $name = '';
 $description = '';
 $price = '';
@@ -34,9 +34,9 @@ $detail = '<h1><span>'.$name.'</span><b>'.$description.'</b></h1>
 <head>
     <title>details</title>
     <meta http-equiv="content-type" content="text/html;charset=utf-8" />
-    <link rel="stylesheet" href="../static/css/common.css" />
-    <script type="text/javascript" src="../static/js/jquery.min.js"></script>
-    <script type="text/javascript" src="../static/js/function.js"></script>
+    <link rel="stylesheet" href="./static/css/common.css" />
+    <script type="text/javascript" src="./static/js/jquery.min.js"></script>
+    <script type="text/javascript" src="./static/js/function.js"></script>
 </head>
 <body onload="myfunction()">
 <div id="top">
@@ -118,9 +118,9 @@ $detail = '<h1><span>'.$name.'</span><b>'.$description.'</b></h1>
 <!-- main -->
 <div id="main">
     <div class="bread-crumb">
-        <a href="../templates/index.html">Home</a>
+        <a href="./main.php">Home</a>
         <span>&gt;</span>
-        <a href="../templates/index.html">Category1</a>
+        <a href="./main.php">Category1</a>
         <span>&gt;</span>
         <a href="#">Java</a>
     </div>
@@ -129,7 +129,7 @@ $detail = '<h1><span>'.$name.'</span><b>'.$description.'</b></h1>
     <div id="product_intro">
         <div id="preview">
             <div id="mediumImgContainer">
-                <img id="medium" src="../static/images/java1.jpeg" />
+                <img id="medium" src="./static/images/java1.jpeg" />
                 <div id="mask"></div>
                 <div id="bigMask"></div>
                 <div id="bigImgArea"></div>
@@ -139,11 +139,11 @@ $detail = '<h1><span>'.$name.'</span><b>'.$description.'</b></h1>
                 <a class="forward" id="btnRight"></a>
                 <div>
                     <ul id="icon_list">
-                        <li><img src="../static/images/java1.jpeg" /></li>
-                        <li><img src="../static/images/java2.jpeg" /></li>
-                        <li><img src="../static/images/java3.jpeg" /></li>
-                        <li><img src="../static/images/java4.jpeg" /></li>
-                        <li><img src="../static/images/java5.jpeg" /></li>
+                        <li><img src="./static/images/java1.jpeg" /></li>
+                        <li><img src="./static/images/java2.jpeg" /></li>
+                        <li><img src="./static/images/java3.jpeg" /></li>
+                        <li><img src="./static/images/java4.jpeg" /></li>
+                        <li><img src="./static/images/java5.jpeg" /></li>
                     </ul>
                 </div>
             </h1>
