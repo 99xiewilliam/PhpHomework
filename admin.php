@@ -13,7 +13,7 @@ $options = '';
 ////    $options .= '<option value="'.$value["catid"].'"> '.$value["name"].' </option>';
 //    echo "key:". $key . "value: ". $value . "<br>";
 //}
-while ($value = $res->fetch_array()) {
+while ($value = $res->fetch()) {
     $options .= '<option value="'.$value["catid"].'"> '.$value["name"].' </option>';
 }
 

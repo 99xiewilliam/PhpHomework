@@ -13,9 +13,7 @@ while ($value = $res->fetch_array()) {
 }
 $count = 0;
 $que = ierg4210_prod_fetchall_by_catid(1);
-while ($value1 = $que->fetch_array()) {
 
-}
 
 
 $index = 0;
@@ -30,7 +28,7 @@ while ($index < count($arr_id)) {
                             <div class="sub_cate_items">';
 
     $que = ierg4210_prod_fetchall_by_catid($in);
-    while ($value1 = $que->fetch_array()) {
+    foreach ($que as $value1) {
         $products .= '<div>
                                     <a href="#">'.$value1["name"].'</a>
                                 </div>';
@@ -57,6 +55,9 @@ while ($index < count($arr_id)) {
         </div>
         ';
     }
+//    while ($value1 = $que->fetch_array()) {
+//
+//    }
 
 
     $products .= '</div>

@@ -70,16 +70,20 @@ function ierg4210_prod_insert() {
         $name = $_POST["name"];
         $price = $_POST["price"];
         $desc = $_POST["description"];
-        $sql="INSERT INTO products 
-    (catid, name, price, description) VALUES ('".$catid."', '".$name."', '".$price."', '".$desc."');";
-        echo $sql;
-        $q = $db->query($sql);
+        $stmt=$db->prepare("INSERT INTO products 
+    (catid, name, price, description) VALUES (?, ?, ?, ?)");
+//        $sql="INSERT INTO products
+//    (catid, name, price, description) VALUES ('".$catid."', '".$name."', '".$price."', '".$desc."');";
+//        echo $sql;
+//        $q = $db->query($sql);
 
 //        $q->bindParam(1, $catid);
 //        $q->bindParam(2, $name);
 //        $q->bindParam(3, $price);
 //        $q->bindParam(4, $desc);
 //        $q->execute();
+        $stmt->bind_param('ssss', $catid, $name, $price, $desc);
+        $stmt->execute();
         $lastId = $db->insert_id;
 //        $file = $_FILES["upfile"];
 //        $filename = $file["tmp_name"];
@@ -115,9 +119,13 @@ function ierg4210_cat_insert() {
     }
 
     $name = $_POST["name"];
+//    $stmt=$db->prepare("INSERT INTO products
+//    (catid, name, price, description) VALUES (?, ?, ?, ?)");
 
-    $sql="INSERT INTO categories (name) VALUES ('".$name."');";
-    if ($db->query($sql) === TRUE) {
+    $stmt=$db->prepare("INSERT INTO categories (name) VALUES (?)");
+    $stmt->bind_param('s', $name);
+
+    if ($stmt->execute()) {
         echo "insert succ";
         return 1;
     }
@@ -136,9 +144,11 @@ function ierg4210_cat_edit(){
 
     $name = $_POST["name"];
     $catid = $_POST["catid"];
-    $sql = "UPDATE categories SET name = ('".$name."') WHERE catid = ('".$catid."');";
-
-    if ($db->query($sql) === TRUE) {
+//    $stmt=$db->prepare("INSERT INTO categories (name) VALUES (?)");
+//    $stmt->bind_param('s', $name);
+    $stmt = $db->prepare("UPDATE categories SET name = (?) WHERE catid = (?)");
+    $stmt->bind_param('sd', $name, $catid);
+    if ($stmt->execute()) {
         echo "update succ";
         return 1;
     }
@@ -153,8 +163,11 @@ function ierg4210_cat_delete(){
     $_POST['catid'] = (int) $_POST['catid'];
 
     $catid = $_POST["catid"];
-    $sql = "DELETE FROM categories WHERE catid = ('".$catid."');";
-    if ($db->query($sql) === TRUE) {
+//    $stmt = $db->prepare("UPDATE categories SET name = (?) WHERE catid = (?)");
+//    $stmt->bind_param('sd', $name, $catid);
+    $stmt = $db->prepare("DELETE FROM categories WHERE catid = (?)");
+    $stmt->bind_param("d", $catid);
+    if ($stmt->execute()) {
         echo "delete succ";
         return 1;
     }
@@ -169,9 +182,11 @@ function ierg4210_prod_delete_by_catid(){
     $_POST['catid'] = (int) $_POST['catid'];
 
     $catid = $_POST["catid"];
+    $stmt = $db->prepare("DELETE FROM products WHERE catid = (?)");
+    $stmt->bind_param("d", $catid);
+//    $sql = "DELETE FROM products WHERE catid = ('".$catid."');";
 
-    $sql = "DELETE FROM products WHERE catid = ('".$catid."');";
-    if ($db->query($sql) === TRUE) {
+    if ($stmt->execute()) {
         echo "delete succ";
         return 1;
     }
@@ -185,9 +200,13 @@ function ierg4210_prod_fetchall_by_catid($catid){
         throw new Exception("invalid-catid");
     $catid = (int) $catid;
 
-    $sql = "SELECT * FROM products WHERE catid = ('".$catid."');";
-    $result = $db->query($sql);
-    return $result;
+    $stmt = $db->prepare("SELECT * FROM products WHERE catid = (?)");
+    $stmt->bind_param("d", $catid);
+    $stmt->execute();
+//    $sql = "SELECT * FROM products WHERE catid = ('".$catid."');";
+//    $result = $db->query($sql);
+
+    return $stmt->get_result();
 //    if ($result->num_rows > 0) {
 //        //如果return $result->fetch_array()会有问题（admin.php会无限循环）不过我还没找到是什么原因
 //        return $result;
@@ -214,9 +233,12 @@ function ierg4210_prod_fetchOne($pid){
     $pid = (int) $pid;
 
 //    $pid = $_POST["pid"];
-    $sql = "SELECT * FROM products WHERE pid = ('".$pid."');";
-    $result = $db->query($sql);
-    return $result;
+    $stmt = $db->prepare("SELECT * FROM products WHERE pid = (?)");
+    $stmt->bind_param('d', $pid);
+    $stmt->execute();
+//    $sql = "SELECT * FROM products WHERE pid = ('".$pid."');";
+//    $result = $db->query($sql);
+    return $stmt->get_result();
 //    if ($result->num_rows > 0) {
 //        //如果return $result->fetch_array()会有问题（admin.php会无限循环）不过我还没找到是什么原因
 //        return $result;
@@ -246,9 +268,15 @@ function ierg4210_prod_edit(){
     $price = $_POST["price"];
     $desc = $_POST["description"];
 
-    $sql = "UPDATE products SET catid = ('".$catid."'), 
-    name = ('".$name."'), price = ('".$price."'), description = ('".$desc."') WHERE pid = ('".$pid."');";
-    if ($db->query($sql) === TRUE) {
+    $sql = "";
+
+    $stmt = $db->prepare("UPDATE products SET catid = (?), 
+    name = (?), price = (?), description = (?) WHERE pid = (?)");
+    $stmt->bind_param('dssss', $catid, $name, $price, $desc, $pid);
+//    $sql = "SELECT * FROM products WHERE pid = ('".$pid."');";
+//    $result = $db->query($sql);
+
+    if ($stmt->execute()) {
         echo "update succ";
         return 1;
     }
@@ -262,8 +290,10 @@ function ierg4210_prod_delete(){
     $_POST['pid'] = (int) $_POST['pid'];
 
     $pid = $_POST["pid"];
-    $sql = "DELETE FROM products WHERE pid = ('".$pid."');";
-    if ($db->query($sql) === TRUE) {
+    $stmt = $db->prepare("DELETE FROM products WHERE pid = (?)");
+    $stmt->bind_param('d', $pid);
+//    $sql = "DELETE FROM products WHERE pid = ('".$pid."');";
+    if ($stmt->execute()) {
         echo "delete succ";
         return 1;
     }

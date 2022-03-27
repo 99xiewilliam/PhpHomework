@@ -65,7 +65,7 @@ $detail = '<h1><span>'.$name.'</span><b>'.$description.'</b></h1>
 <!-- nav -->
 <div id="nav">
     <div id="category">
-        <div id="cate_mt" onmouseover="showElementById('all_cate',true);"  onmouseout="showElementById('all_cate',false);">
+        <div id="cate_mt" onmouseover="showElementById('all_cate',true);"  onmouseout= z"showElementById('all_cate',false);">
             <a href="#">all categories</a>
             <span></span>
         </div>
