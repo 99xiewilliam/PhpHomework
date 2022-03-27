@@ -299,50 +299,48 @@ function ierg4210_prod_delete(){
     }
 }
 
-//function thumb($file,$dw,$dh,$path){//这四个参数分别是1、要缩略的图片，2、画布的宽（也就是你要缩略的宽）3、画布的高（也就是你要缩略的高），4、保存路径）
-//    //获取用户名图
-//    $srcImg = getImg($file);//调用下面那个函数，实现根据图片类型来创建不同的图片画布
-//    //获取原图的宽高
-//    $infoSrc = getimagesize($file);//这个getimagesize()是php里面的系统函数用来获取图片的具体信息的
-//    $sw = $infoSrc[0];//获取要缩略图片的宽
-//    $sh = $infoSrc[1]; //获取要缩略的图片的高
-//    //创建缩略图画布
-//    $destImg = imagecreatetruecolor($dw, $dh);
-//    //为缩略图填充背景色
-//    $bg = imagecolorallocate($destImg,250,250,250);
-//    imagefill($destImg,0,0,$bg);
-//    //计算例缩放的尺寸
-//    if($dh/$dw>$sh/$sw){
-//        $fw=$dw;
-//        $fh=$sh/$sw*$fw;
-//    }else{
-//        $fh=$dh;
-//        $fw=$fh*$sw/$sh;
-//    }
-//    //居中放置
-//    $dx=($dw-$fw)/2;
-//    $dy=($dh-$fh)/2;
-//    //创建缩略图
-//    imagecopyresampled($destImg, $srcImg, 0, 0, 0, 0 ,$fw, $fh,$sw, $sh);
-//    $baseName='thumb_'.basename($file);//给缩略的图片命名，basename()是系统内置函数用来获取后缀名的
-//    $savePath=$path.'/'.$baseName;//设置缩略图片保存路径
-//    imagejpeg($destImg,$savePath);//把缩略图存放到上一步设置的保存路径里
-//
-//}
-//function getImg($file){//这是以一个动态创建图片画布的函数（根据具体的图片类型创相应类型的画布）
-//    $info=getimagesize($file);
-//    $fn=$info['mime'];//获得图片类型；
-//    switch($fn){
-//        case 'image/jpeg'://如果类型是imag/jpeg就创建jpeg类型的画布
-//            $img=imagecreatefromjpeg($file);
-//            break;
-//        case 'image/gif':
-//            $img=imagecreatefromgif($file);//如果类型是gif就创建gif类型的画布
-//        case 'image/png':
-//            $img=imagecreatefrompng($file);//如果类型是png就创建png类型的画布
-//            break;
-//
-//    }
-//    return $img;//返回画布类型
-//}
+function ierg4210_login() {
+    global $db;
+    $db = ierg4210_DB();
+
+    if (empty($_POST['email']) || empty($_POST['pw'])
+        || !preg_match("/^[\w=+\-\/][\w='+\-\/\.]*@[\w\-]+(\.[\w\-]+)*(\.[\w]{2,6})$/", $_POST['email'])
+        || !preg_match("/^[\w@#$%\^\&\*\-]+$/", $_POST['pw'])) {
+        throw new Exception('Wrong Credentials');
+    }
+    $email = $_POST['email'];
+    $pwd = $_POST['pw'];
+    $stmt = $db->prepare("SELECT * FROM user WHERE email = (?)");
+    $stmt->bind_param('s', $email);
+    $stmt->execute();
+    $res = $stmt->get_result();
+    $login_success = false;
+    foreach ($res as $value) {
+        $saltedPwd = hash_hmac('sha256', $pwd, $value['salt']);
+        if ($saltedPwd == $value['password']) {
+            $exp = time() + 3600 * 24 * 3;
+            $token = array(
+                'em' => $value['email'],
+                'exp' => $exp,
+                'k' => hash_hmac('sha256', $exp.$value['password'], $value['salt'])
+            );
+            setcookie('s4210', json_encode($token), $exp, '', '', true, true);
+            $_SESSION['s4210'] = $token;
+            $login_success =  true;
+        }
+    }
+
+    if ($login_success) {
+        header('Location: admin.php', true, 302);
+        exit();
+    } else {
+        throw new Exception('Wrong Credentials');
+    }
+}
+
+function ierg4210_logout() {
+
+    header('Location: login.php', true, 302);
+    exit();
+}
 
