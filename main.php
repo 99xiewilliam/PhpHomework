@@ -38,7 +38,7 @@ while ($index < count($arr_id)) {
             <div class="product-iWrap">
                 <!--page-->
                 <div class="productImg-wrap">
-                    <a class="productImg" href="./detail.php">
+                    <a class="productImg" href="./detail.php?pictureid='. $value1["pid"] .'&name='.$value1["name"].'">
                         <img src="/static/images/'. $value1["pid"] .'.jpg">
                     </a>
                 </div>

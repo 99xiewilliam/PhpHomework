@@ -1,6 +1,6 @@
 <?php
 require __DIR__.'/lib/db.inc.php';
-$res = ierg4210_prod_fetchOne(21);
+$res = ierg4210_prod_fetchOne($_GET['pictureid']);
 $name = '';
 $description = '';
 $price = '';
@@ -8,9 +8,11 @@ $pid = 0;
 while ($value = $res->fetch_array()) {
     $pid = $value["pid"];
     $name = $value["name"];
-    $description = $value["$description"];
+    $description = $value["description"];
     $price = $value["price"];
 }
+$img = "/static/images/". $_GET['pictureid'] .".jpg";
+$pictureName = $_GET['name'];
 
 $detail = '<h1><span>'.$name.'</span><b>'.$description.'</b></h1>
         <ul id="summary">
@@ -54,8 +56,6 @@ $detail = '<h1><span>'.$name.'</span><b>'.$description.'</b></h1>
         <div id="settle_up_items" onmouseover="showElementById('settle_up_items', true);" onmouseout="showElementById('settle_up_items',false);">
             <div id="sumPrice">Total Price: </div>
             <div id="no_goods">
-<!--                <div>-Prod2   [1] @¥12500</div>-->
-<!--                <div>-Prod3   [2] @¥12500</div>-->
             </div>
             <input type="button" value="check out">
         </div>
@@ -122,31 +122,31 @@ $detail = '<h1><span>'.$name.'</span><b>'.$description.'</b></h1>
         <span>&gt;</span>
         <a href="./main.php">Category1</a>
         <span>&gt;</span>
-        <a href="#">Java</a>
+        <a href="#"><?php echo $pictureName ?></a>
     </div>
 
     <!--details-->
     <div id="product_intro">
         <div id="preview">
             <div id="mediumImgContainer">
-                <img id="medium" src="./static/images/java1.jpeg" />
+                <img id="medium" src=<?php echo $img ?> />
                 <div id="mask"></div>
                 <div id="bigMask"></div>
                 <div id="bigImgArea"></div>
             </div>
-            <h1>
-                <a class="backward_disabled" id="btnLeft"></a>
-                <a class="forward" id="btnRight"></a>
-                <div>
-                    <ul id="icon_list">
-                        <li><img src="./static/images/java1.jpeg" /></li>
-                        <li><img src="./static/images/java2.jpeg" /></li>
-                        <li><img src="./static/images/java3.jpeg" /></li>
-                        <li><img src="./static/images/java4.jpeg" /></li>
-                        <li><img src="./static/images/java5.jpeg" /></li>
-                    </ul>
-                </div>
-            </h1>
+<!--            <h1>-->
+<!--                <a class="backward_disabled" id="btnLeft"></a>-->
+<!--                <a class="forward" id="btnRight"></a>-->
+<!--                <div>-->
+<!--                    <ul id="icon_list">-->
+<!--                        <li><img src="./static/images/java1.jpeg" /></li>-->
+<!--                        <li><img src="./static/images/java2.jpeg" /></li>-->
+<!--                        <li><img src="./static/images/java3.jpeg" /></li>-->
+<!--                        <li><img src="./static/images/java4.jpeg" /></li>-->
+<!--                        <li><img src="./static/images/java5.jpeg" /></li>-->
+<!--                    </ul>-->
+<!--                </div>-->
+<!--            </h1>-->
         </div>
         <?php echo $detail ?>
         <ul id="choose">
