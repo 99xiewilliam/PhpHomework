@@ -231,7 +231,6 @@ function ierg4210_prod_fetchOne($pid){
     if (!preg_match('/^\d*$/', $pid))
         throw new Exception("invalid-pid");
     $pid = (int) $pid;
-
 //    $pid = $_POST["pid"];
     $stmt = $db->prepare("SELECT * FROM products WHERE pid = (?)");
     $stmt->bind_param('d', $pid);

@@ -31,8 +31,8 @@ function showNaviSubItems(divObj) {
     divObj.getElementsByTagName("div")[0].style.display = "block";
 }
 
-function addCart() {
-    let pid = "14";
+function addCart(pid) {
+    // let pid = "14";
     //判断是否已经存入缓存
     if (localStorage.getItem(pid) != null) {
         //更新缓存数据
@@ -49,7 +49,7 @@ function addCart() {
         $.ajax({
             type: "post",
             url: "/lib/addcart.php",
-            data: {pid:14},
+            data: {pid:pid + ""},
             dataType: "json",
             success: function(msg) {
                 let data = JSON.parse(msg);
