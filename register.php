@@ -53,17 +53,17 @@ $res = ierg4210_cat_fetchall();
 <head>
     <title>Home</title>
     <meta http-equiv="content-type" content="text/html;charset=utf-8" />
-<!--    <link rel="stylesheet" href="./static/css/common.css" />-->
+    <!--    <link rel="stylesheet" href="./static/css/common.css" />-->
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<!--    <script type="text/javascript" src="./static/js/function.js"></script>-->
+    <!--    <script type="text/javascript" src="./static/js/function.js"></script>-->
 </head>
 <body>
 <fieldset>
-    <h1>Login</h1>
+    <h1>Register</h1>
     <fieldset>
-        <legend> Login in</legend>
-        <form id="cate_edit" method="POST" action="admin-process.php?action=login"
+        <legend> Register</legend>
+        <form id="cate_edit" method="POST" action="admin-process.php?action=register"
               enctype="multipart/form-data">
             <label for="cate_id"> email</label>
             <div> <input id="cate_id" type="text" name="email" required="required" /></div>

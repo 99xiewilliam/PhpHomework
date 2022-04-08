@@ -1,5 +1,6 @@
 <?php
 //完成
+
 function ierg4210_DB() {
 	// connect to the database
 	// TODO: change the following path if needed
@@ -337,9 +338,9 @@ function ierg4210_prod_delete(){
 //    }
 //}
 
-function ierg4210_logout() {
-
-    header('Location: login.php', true, 302);
-    exit();
-}
+//function ierg4210_logout() {
+//
+//    header('Location: login.php', true, 302);
+//    exit();
+//}
 

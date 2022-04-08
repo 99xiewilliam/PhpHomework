@@ -1,15 +1,47 @@
 <?php
 
-include_once('lib/db.inc.php');
+//include_once('lib/db.inc.php');
 header('Content-Type: application/json');
+
+function ierg4210_register() {
+    global $db;
+    $db = ierg4210_DB();
+    echo $_POST['email'] . "<br>";
+    echo $_POST['pw'] . "<br>";
+    echo !preg_match("/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/", $_POST['email']);
+    echo !preg_match("/^(?=.*\d)(?=.*[a-zA-Z])[\da-zA-Z~!@#$%^&*._?]{8,15}$/", $_POST['pw']);
+
+
+    if (empty($_POST['email']) || empty($_POST['pw'])
+        || !preg_match("/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/", $_POST['email'])
+        || !preg_match("/^(?=.*\d)(?=.*[a-zA-Z])[\da-zA-Z~!@#$%^&*._?]{8,15}$/", $_POST['pw'])) {
+
+        throw new Exception('Wrong Credentials');
+    }
+
+    $email = $_POST['email'];
+    $pwd = $_POST['pw'];
+    $salt = mt_rand();
+    $flag = 0;
+    $saltPassword = hash_hmac('sha256', $pwd, $salt);
+    echo "xiaoxinxin" ."<br>";
+
+    $stmt = $db->prepare("INSERT INTO user (email, password, salt, flag) VALUES (?, ?, ?, ?)");
+    $stmt->bind_param('ssdd', $email, $saltPassword, $salt, $flag);
+    if ($stmt->execute()) {
+        echo "update succ";
+        return 1;
+    }
+
+}
 
 function ierg4210_login() {
     global $db;
     $db = ierg4210_DB();
 
     if (empty($_POST['email']) || empty($_POST['pw'])
-        || !preg_match("/^[\w=+\-\/][\w='+\-\/\.]*@[\w\-]+(\.[\w\-]+)*(\.[\w]{2,6})$/", $_POST['email'])
-        || !preg_match("/^[\w@#$%\^\&\*\-]+$/", $_POST['pw'])) {
+        || !preg_match("/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/", $_POST['email'])
+        || !preg_match("/^(?=.*\d)(?=.*[a-zA-Z])[\da-zA-Z~!@#$%^&*._?]{8,15}$/", $_POST['pw'])) {
         throw new Exception('Wrong Credentials');
     }
     $email = $_POST['email'];
@@ -70,17 +102,20 @@ function ierg4210_login() {
 //}
 
 function ierg4210_logout() {
-
+    $_SESSION = array();
+    if (isset($_COOKIE['s4210'])) {
+        setcookie('s4210', '', time() - 1, '/');
+    }
+    session_destroy();
     header('Location: login.php', true, 302);
     exit();
 }
 
-function auth() {
+function ierg4210_auth() {
     if (!empty($_SESSION['s4210'])) {
         return $_SESSION['s4210']['em'];
     }
     if (!empty($_COOKIE['s4210'])) {
-
         if ($t = json_encode(stripcslashes($_COOKIE['s4210']), true)) {
             if (time() > $t['exp']) {
                 return false;
@@ -91,7 +126,7 @@ function auth() {
             $q->bind_param('s', $email);
             $res = $q->get_result();
             foreach ($res as $value) {
-                $realk = hash_hmac('sha1', $t['exp'].$value['password'], $value['salt']);
+                $realk = hash_hmac('sha256', $t['exp'].$value['password'], $value['salt']);
                 if ($realk == $t['k']) {
                     $_SESSION['s4210'] = $t;
                     return $t['em'];
