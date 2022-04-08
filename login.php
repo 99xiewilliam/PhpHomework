@@ -1,50 +1,78 @@
 <?php
-echo ($salt = mt_rand()) . "<br/>";
-echo hash_hmac('sha256', $_REQUEST['password'], $salt);
+require __DIR__.'/lib/db.inc.php';
+$res = ierg4210_cat_fetchall();
+//$options = '';
+//echo ($salt = mt_rand()) . "<br/>";
+//echo hash_hmac('sha256', $_REQUEST['password'], $salt);
+//
+//function ierg4210_login() {
+//    if (empty($_POST['email']) || empty($_POST['pw'])
+//        || !preg_match("/^[\w=+\-\/][\w='+\-\/\.]*@[\w\-]+(\.[\w\-]+)*(\.[\w]{2,6})$/", $_POST['email'])
+//        || !preg_match("/^[\w@#$%\^\&\*\-]+$/", $_POST['pw'])) {
+//        throw new Exception('Wrong Credentials');
+//    }
+//    $login_success = false;
+//
+//    if ($login_success) {
+//        header('Location: admin.php', true, 302);
+//        exit();
+//    } else {
+//        throw new Exception('Wrong Credentials');
+//    }
+//}
+//
+//function ierg4210_logout() {
+//
+//    header('Location: login.php', true, 302);
+//    exit();
+//}
 
-function ierg4210_login() {
-    if (empty($_POST['email']) || empty($_POST['pw'])
-        || !preg_match("/^[\w=+\-\/][\w='+\-\/\.]*@[\w\-]+(\.[\w\-]+)*(\.[\w]{2,6})$/", $_POST['email'])
-        || !preg_match("/^[\w@#$%\^\&\*\-]+$/", $_POST['pw'])) {
-        throw new Exception('Wrong Credentials');
-    }
-    $login_success = false;
 
-    if ($login_success) {
-        header('Location: admin.php', true, 302);
-        exit();
-    } else {
-        throw new Exception('Wrong Credentials');
-    }
-}
+//foreach ($res as $value){
+//    $options .= '<option value="'.$value["catid"].'"> '.$value["name"].' </option>';
+//    echo $options;
+//}
 
-function ierg4210_logout() {
+//foreach ($res as $key => $value){
+////    $options .= '<option value="'.$value["catid"].'"> '.$value["name"].' </option>';
+//    echo "key:". $key . "value: ". $value . "<br>";
+//}
+//while ($value = $res->fetch()) {
+//    $options .= '<option value="'.$value["catid"].'"> '.$value["name"].' </option>';
+//}
 
-    header('Location: login.php', true, 302);
-    exit();
-}
+
+
+//while ($row = $res) {
+//    echo $row . "<br>";
+//}
+
 ?>
 
-<!DOCTYPE HTMl>
 <html>
 <head>
     <title>Home</title>
     <meta http-equiv="content-type" content="text/html;charset=utf-8" />
-    <link rel="stylesheet" href="./static/css/common.css" />
-    <link rel="stylesheet" href="./static/css/jquery.pagination.css" />
-    <script type="text/javascript" src="./static/js/jquery.min.js"></script>
-    <script type="text/javascript" src="./static/js/function.js"></script>
-    <script type="text/javascript" src="./static/js/jquery.pagination.js"></script>
+<!--    <link rel="stylesheet" href="./static/css/common.css" />-->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<!--    <script type="text/javascript" src="./static/js/function.js"></script>-->
 </head>
 <body>
-<h1>Login in page</h1>>
-<form action="#" method="get">
-    email：<input type="text" name="user" value="" placeholder="input email"><br>
-    password：<input type="password" name="password" value="" placeholder="input password"><br>
-    <input type="submit" name="" value="submit" placeholder=""><br>
-</form>
-
+<fieldset>
+    <h1>Login</h1>
+    <fieldset>
+        <legend> Modify Category</legend>
+        <form id="cate_edit" method="POST" action="auth-process.php?action=ierg4210_login"
+              enctype="multipart/form-data">
+            <label for="cate_id"> email</label>
+            <div> <input id="cate_id" type="text" name="email" required="required" pattern="^\d+\.?\d*$"/></div>
+            <label for="cate_name"> password</label>
+            <div><input id="cate_name" type="password" name="password" required="true" pattern="^[\w\- ]+$" /></div>
+            <input type="submit" value="Submit" />
+        </form>
+    </fieldset>
+</fieldset>
 </body>
 </html>
-
 

@@ -81,8 +81,9 @@ function downValue() {
     }
 }
 
-function decreaseOne() {
-    let pid = "14";
+function decreaseOne(pid) {
+    // let pid = "14";
+    pid = pid + "";
     if (localStorage.getItem(pid) != null) {
         let obj = JSON.parse(localStorage.getItem(pid));
         let num = parseInt(obj["count"]);

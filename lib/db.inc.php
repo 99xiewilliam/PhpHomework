@@ -298,44 +298,44 @@ function ierg4210_prod_delete(){
     }
 }
 
-function ierg4210_login() {
-    global $db;
-    $db = ierg4210_DB();
-
-    if (empty($_POST['email']) || empty($_POST['pw'])
-        || !preg_match("/^[\w=+\-\/][\w='+\-\/\.]*@[\w\-]+(\.[\w\-]+)*(\.[\w]{2,6})$/", $_POST['email'])
-        || !preg_match("/^[\w@#$%\^\&\*\-]+$/", $_POST['pw'])) {
-        throw new Exception('Wrong Credentials');
-    }
-    $email = $_POST['email'];
-    $pwd = $_POST['pw'];
-    $stmt = $db->prepare("SELECT * FROM user WHERE email = (?)");
-    $stmt->bind_param('s', $email);
-    $stmt->execute();
-    $res = $stmt->get_result();
-    $login_success = false;
-    foreach ($res as $value) {
-        $saltedPwd = hash_hmac('sha256', $pwd, $value['salt']);
-        if ($saltedPwd == $value['password']) {
-            $exp = time() + 3600 * 24 * 3;
-            $token = array(
-                'em' => $value['email'],
-                'exp' => $exp,
-                'k' => hash_hmac('sha256', $exp.$value['password'], $value['salt'])
-            );
-            setcookie('s4210', json_encode($token), $exp, '', '', true, true);
-            $_SESSION['s4210'] = $token;
-            $login_success =  true;
-        }
-    }
-
-    if ($login_success) {
-        header('Location: admin.php', true, 302);
-        exit();
-    } else {
-        throw new Exception('Wrong Credentials');
-    }
-}
+//function ierg4210_login() {
+//    global $db;
+//    $db = ierg4210_DB();
+//
+//    if (empty($_POST['email']) || empty($_POST['pw'])
+//        || !preg_match("/^[\w=+\-\/][\w='+\-\/\.]*@[\w\-]+(\.[\w\-]+)*(\.[\w]{2,6})$/", $_POST['email'])
+//        || !preg_match("/^[\w@#$%\^\&\*\-]+$/", $_POST['pw'])) {
+//        throw new Exception('Wrong Credentials');
+//    }
+//    $email = $_POST['email'];
+//    $pwd = $_POST['pw'];
+//    $stmt = $db->prepare("SELECT * FROM user WHERE email = (?)");
+//    $stmt->bind_param('s', $email);
+//    $stmt->execute();
+//    $res = $stmt->get_result();
+//    $login_success = false;
+//    foreach ($res as $value) {
+//        $saltedPwd = hash_hmac('sha256', $pwd, $value['salt']);
+//        if ($saltedPwd == $value['password']) {
+//            $exp = time() + 3600 * 24 * 3;
+//            $token = array(
+//                'em' => $value['email'],
+//                'exp' => $exp,
+//                'k' => hash_hmac('sha256', $exp.$value['password'], $value['salt'])
+//            );
+//            setcookie('s4210', json_encode($token), $exp, '', '', true, true);
+//            $_SESSION['s4210'] = $token;
+//            $login_success =  true;
+//        }
+//    }
+//
+//    if ($login_success) {
+//        header('Location: admin.php', true, 302);
+//        exit();
+//    } else {
+//        throw new Exception('Wrong Credentials');
+//    }
+//}
 
 function ierg4210_logout() {
 

@@ -30,6 +30,8 @@ $detail = '<h1><span>'.$name.'</span><b>'.$description.'</b></h1>
             </li>
         </ul>';
 $addCart = $_GET['pictureid'];
+$decreaseOne = $_GET['pictureid'];
+
 //$addCart = 'addCart('.$_GET['pictureid'].')';
 
 ?>
@@ -163,7 +165,7 @@ $addCart = $_GET['pictureid'];
             </li>
             <li id="choose_btns" class="clear">
                 <input type="button" value="add to cart" onclick="addCart(<?php echo $addCart?>)">
-                <input type="button" value="decrease one" onclick="decreaseOne()">
+                <input type="button" value="decrease one" onclick="decreaseOne(<?php echo $decreaseOne?>)">
             </li>
 
         </ul>
