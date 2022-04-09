@@ -1,5 +1,6 @@
 <?php
 include_once('lib/db.inc.php');
+include_once('auth-process.php');
 
 header('Content-Type: application/json');
 

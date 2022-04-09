@@ -1,21 +1,27 @@
 <?php
 require __DIR__.'/lib/db.inc.php';
+include_once('auth-process.php');
+if (ierg4210_auth() == false) {
+//    header('Location: login.php', true, 302);
+//    exit();
+}
+
 $res = ierg4210_cat_fetchall();
 $options = '';
 
 
-//foreach ($res as $value){
-//    $options .= '<option value="'.$value["catid"].'"> '.$value["name"].' </option>';
+foreach ($res as $value){
+    $options .= '<option value="'.$value["catid"].'"> '.$value["name"].' </option>';
 //    echo $options;
-//}
+}
 
 //foreach ($res as $key => $value){
 ////    $options .= '<option value="'.$value["catid"].'"> '.$value["name"].' </option>';
 //    echo "key:". $key . "value: ". $value . "<br>";
 //}
-while ($value = $res->fetch()) {
-    $options .= '<option value="'.$value["catid"].'"> '.$value["name"].' </option>';
-}
+//while ($value = $res->fetch()) {
+//    $options .= '<option value="'.$value["catid"].'"> '.$value["name"].' </option>';
+//}
 
 
 

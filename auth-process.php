@@ -22,7 +22,7 @@ function ierg4210_register() {
     $email = $_POST['email'];
     $pwd = $_POST['pw'];
     $salt = mt_rand();
-    $flag = 0;
+    $flag = 1;
     $saltPassword = hash_hmac('sha256', $pwd, $salt);
     echo "xiaoxinxin" ."<br>";
 
@@ -75,7 +75,8 @@ function ierg4210_login() {
         header('Location: main.php', true, 302);
         exit();
     } else {
-        throw new Exception('Wrong Credentials');
+        header('Location: login.php', true, 302);
+        exit();
     }
 }
 
@@ -111,31 +112,32 @@ function ierg4210_logout() {
     exit();
 }
 
-function ierg4210_auth() {
-    if (!empty($_SESSION['s4210'])) {
-        return $_SESSION['s4210']['em'];
-    }
-    if (!empty($_COOKIE['s4210'])) {
-        if ($t = json_encode(stripcslashes($_COOKIE['s4210']), true)) {
-            if (time() > $t['exp']) {
-                return false;
-            }
-            $db = ierg4210_DB();
-            $q = $db->prepare('SELECT * FROM user WHERE email = ?');
-            $email = $t['em'];
-            $q->bind_param('s', $email);
-            $res = $q->get_result();
-            foreach ($res as $value) {
-                $realk = hash_hmac('sha256', $t['exp'].$value['password'], $value['salt']);
-                if ($realk == $t['k']) {
-                    $_SESSION['s4210'] = $t;
-                    return $t['em'];
-                }
-            }
-        }
-    }
-    return false;
-}
+//function ierg4210_auth() {
+//    if (!empty($_SESSION['s4210'])) {
+//        return $_SESSION['s4210']['em'];
+//    }
+//    if (!empty($_COOKIE['s4210'])) {
+//        if ($t = json_decode(stripcslashes($_COOKIE['s4210']), true)) {
+//
+//            if (time() > $t['exp']) {
+//                return false;
+//            }
+//            $db = ierg4210_DB();
+//            $q = $db->prepare('SELECT * FROM user WHERE email = ?');
+//            $email = $t['em'];
+//            $q->bind_param('s', $email);
+//            $res = $q->get_result();
+//            foreach ($res as $value) {
+//                $realk = hash_hmac('sha256', $t['exp'].$value['password'], $value['salt']);
+//                if ($realk == $t['k']) {
+//                    $_SESSION['s4210'] = $t;
+//                    return $t['em'];
+//                }
+//            }
+//        }
+//    }
+//    return false;
+//}
 
 //// input validation
 //if (empty($_REQUEST['action']) || !preg_match('/^\w+$/', $_REQUEST['action'])) {

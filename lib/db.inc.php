@@ -2,15 +2,15 @@
 //完成
 
 function ierg4210_DB() {
-	// connect to the database
-	// TODO: change the following path if needed
-	// Warning: NEVER put your db in a publicly accessible location
-	// FETCH_ASSOC:
-	// Specifies that the fetch method shall return each row as an
-	// array indexed by column name as returned in the corresponding
-	// result set. If the result set contains multiple columns with
+    // connect to the database
+    // TODO: change the following path if needed
+    // Warning: NEVER put your db in a publicly accessible location
+    // FETCH_ASSOC:
+    // Specifies that the fetch method shall return each row as an
+    // array indexed by column name as returned in the corresponding
+    // result set. If the result set contains multiple columns with
     // the same name, PDO::FETCH_ASSOC returns only a single value
-	// per column name.
+    // per column name.
 
     $servername = "localhost";
     $username = "root";
@@ -22,7 +22,7 @@ function ierg4210_DB() {
     }
 
 
-	return $db;
+    return $db;
 }
 
 //完成
@@ -31,11 +31,14 @@ function ierg4210_cat_fetchall() {
     global $db;
     $db = ierg4210_DB();
     $sql = "SELECT * FROM categories LIMIT 100;";
-    $result = $db->query($sql);
-    if ($result->num_rows > 0) {
-        //如果return $result->fetch_array()会有问题（admin.php会无限循环）不过我还没找到是什么原因
-        return $result;
-    }
+    $stmt = $db->prepare($sql);
+    $stmt->execute();
+    return $stmt->get_result();
+//    $result = $db->query($sql);
+//    if ($result->num_rows > 0) {
+//        //如果return $result->fetch_array()会有问题（admin.php会无限循环）不过我还没找到是什么原因
+//        return $result;
+//    }
 
 }
 
@@ -297,6 +300,38 @@ function ierg4210_prod_delete(){
         echo "delete succ";
         return 1;
     }
+}
+
+function ierg4210_auth() {
+    global $db;
+    if (!empty($_SESSION['s4210'])) {
+        return $_SESSION['s4210']['em'];
+    }
+    if (!empty($_COOKIE['s4210'])) {
+        if ($t = json_decode(stripcslashes($_COOKIE['s4210']), true)) {
+
+            if (time() > $t['exp']) {
+                return false;
+            }
+
+            $db = ierg4210_DB();
+            $q = $db->prepare("SELECT * FROM user WHERE email = (?)");
+            $email = $t['em'];
+            $q->bind_param('s', $email);
+            $q->execute();
+            $res = $q->get_result();
+
+            foreach ($res as $value) {
+                $realk = hash_hmac('sha256', $t['exp'].$value['password'], $value['salt']);
+
+                if ($realk == $t['k']) {
+                    $_SESSION['s4210'] = $t;
+                    return $t['em'];
+                }
+            }
+        }
+    }
+    return false;
 }
 
 //function ierg4210_login() {
