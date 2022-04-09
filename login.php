@@ -70,7 +70,7 @@ $res = ierg4210_cat_fetchall();
             <label for="cate_name"> password</label>
             <div><input id="cate_name" type="password" name="pw" required="true" pattern="^(?=.*\d)(?=.*[a-zA-Z])[\da-zA-Z~!@#$%^&*._?]{8,15}$"/></div>
             <input type="submit" value="Submit" />
-            <input type="hidden" name="nonce" value="<?php echo csrf_getNonce($action)?>">
+            <input type="hidden" name="nonce" value="<?php echo csrf_getNonce($action);?>">
         </form>
     </fieldset>
 </fieldset>

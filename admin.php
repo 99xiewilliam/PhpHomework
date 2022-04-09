@@ -52,7 +52,7 @@ foreach ($res as $value){
             <label for="cate_name"> Name</label>
             <div><input id="cate_name" type="text" name="name" required="true" pattern="^[\w\- ]+$" /></div>
             <input type="submit" value="Submit" />
-            <input type="hidden" name="nonce" value="<?php echo csrf_getNonce($action)?>">
+            <input type="hidden" name="nonce" value="<?php echo csrf_getNonce($action); ?>">
         </form>
     </fieldset>
     <fieldset>
@@ -64,7 +64,7 @@ foreach ($res as $value){
             <label for="cate_name"> Name</label>
             <div><input id="cate_name" type="text" name="name" required="true" pattern="^[\w\- ]+$" /></div>
             <input type="submit" value="Submit" />
-            <input type="hidden" name="nonce" value="<?php echo csrf_getNonce($action)?>">
+            <input type="hidden" name="nonce" value="<?php echo csrf_getNonce($action); ?>">
         </form>
     </fieldset>
     <fieldset>
@@ -74,7 +74,7 @@ foreach ($res as $value){
             <label for="cate_id"> categoryId</label>
             <div> <input id="cate_id" type="text" name="catid" required="required" pattern="^\d+\.?\d*$"/></div>
             <input type="submit" value="Submit" />
-            <input type="hidden" name="nonce" value="<?php echo csrf_getNonce($action)?>">
+            <input type="hidden" name="nonce" value="<?php echo csrf_getNonce($action); ?>">
         </form>
     </fieldset>
     <fieldset>
@@ -97,7 +97,7 @@ foreach ($res as $value){
             <div id="drop_zone">Drop files here</div>
             <output id="list"></output>
             <input type="submit" value="Submit"/>
-            <input type="hidden" name="nonce" value="<?php echo csrf_getNonce($action)?>">
+            <input type="hidden" name="nonce" value="<?php echo csrf_getNonce($action); ?>">
         </form>
     </fieldset>
     <fieldset>
@@ -117,7 +117,7 @@ foreach ($res as $value){
             <!--                <label for="prod_image"> Image * </label>-->
             <!--                <div> <input type="file" name="file" required="true" accept="image/jpeg"/> </div>-->
             <input type="submit" value="Submit"/>
-            <input type="hidden" name="nonce" value="<?php echo csrf_getNonce($action)?>">
+            <input type="hidden" name="nonce" value="<?php echo csrf_getNonce($action); ?>">
         </form>
     </fieldset>
     <fieldset>
@@ -127,7 +127,7 @@ foreach ($res as $value){
             <label for="prod_id"> prodId</label>
             <div> <input id="prod_id" type="text" name="pid" required="required" pattern="^\d+\.?\d*$"/></div>
             <input type="submit" value="Submit" />
-            <input type="hidden" name="nonce" value="<?php echo csrf_getNonce($action)?>">
+            <input type="hidden" name="nonce" value="<?php echo csrf_getNonce($action); ?>">
         </form>
     </fieldset>
     <fieldset>
@@ -137,7 +137,7 @@ foreach ($res as $value){
             <label for="cate_id"> catId</label>
             <div> <input id="cate_id" type="text" name="catid" required="required" pattern="^\d+\.?\d*$"/></div>
             <input type="submit" value="Submit" />
-            <input type="hidden" name="nonce" value="<?php echo csrf_getNonce($action)?>">
+            <input type="hidden" name="nonce" value="<?php echo csrf_getNonce($action); ?>">
         </form>
     </fieldset>
 </fieldset>

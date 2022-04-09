@@ -341,6 +341,7 @@ function csrf_getNonce($action) {
         $_SESSION['csrf_nonce'] = array();
     }
     $_SESSION['csrf_nonce'][$action] = $nonce;
+    echo $nonce;
 
     return $nonce;
 }
@@ -352,7 +353,7 @@ function csrf_verifyNonce($action, $receivedNonce) {
         }
         return true;
     }
-    throw new Exception('csrf-attack');
+    return false;
 }
 
 
