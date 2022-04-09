@@ -334,6 +334,29 @@ function ierg4210_auth() {
     return false;
 }
 
+function csrf_getNonce($action) {
+    $nonce = mt_rand() . mt_rand();
+
+    if (!isset($_SESSION['csrf_nonce'])) {
+        $_SESSION['csrf_nonce'] = array();
+    }
+    $_SESSION['csrf_nonce'][$action] = $nonce;
+
+    return $nonce;
+}
+
+function csrf_verifyNonce($action, $receivedNonce) {
+    if (isset($receivedNonce) && $_SESSION['csrf_nonce'][$action] == $receivedNonce) {
+        if ($_SESSION['s4210'] == null) {
+            unset($_SESSION['csrf_nonce'][$action]);
+        }
+        return true;
+    }
+    throw new Exception('csrf-attack');
+}
+
+
+
 //function ierg4210_login() {
 //    global $db;
 //    $db = ierg4210_DB();

@@ -47,36 +47,39 @@ foreach ($res as $value){
     <h1>IERG4210 Shop - Admin Panel</h1>
     <fieldset>
         <legend> New Category</legend>
-        <form id="cate_insert" method="POST" action="admin-process.php?action=cat_insert"
+        <form id="cate_insert" method="POST" action="admin-process.php?action=<?php echo ($action = 'cat_insert'); ?>"
               enctype="multipart/form-data">
             <label for="cate_name"> Name</label>
             <div><input id="cate_name" type="text" name="name" required="true" pattern="^[\w\- ]+$" /></div>
             <input type="submit" value="Submit" />
+            <input type="hidden" name="nonce" value="<?php echo csrf_getNonce($action)?>">
         </form>
     </fieldset>
     <fieldset>
         <legend> Modify Category</legend>
-        <form id="cate_edit" method="POST" action="admin-process.php?action=cat_edit"
+        <form id="cate_edit" method="POST" action="admin-process.php?action=<?php echo ($action = 'cat_edit'); ?>"
               enctype="multipart/form-data">
             <label for="cate_id"> categoryId</label>
             <div> <input id="cate_id" type="text" name="catid" required="required" pattern="^\d+\.?\d*$"/></div>
             <label for="cate_name"> Name</label>
             <div><input id="cate_name" type="text" name="name" required="true" pattern="^[\w\- ]+$" /></div>
             <input type="submit" value="Submit" />
+            <input type="hidden" name="nonce" value="<?php echo csrf_getNonce($action)?>">
         </form>
     </fieldset>
     <fieldset>
         <legend> Delete Category</legend>
-        <form id="cate_delete" method="POST" action="admin-process.php?action=cat_delete"
+        <form id="cate_delete" method="POST" action="admin-process.php?action=<?php echo ($action = 'cat_delete'); ?>"
               enctype="multipart/form-data">
             <label for="cate_id"> categoryId</label>
             <div> <input id="cate_id" type="text" name="catid" required="required" pattern="^\d+\.?\d*$"/></div>
             <input type="submit" value="Submit" />
+            <input type="hidden" name="nonce" value="<?php echo csrf_getNonce($action)?>">
         </form>
     </fieldset>
     <fieldset>
         <legend> New Product</legend>
-        <form id="prod_insert" method="POST" action="admin-process.php?action=prod_insert"
+        <form id="prod_insert" method="POST" action="admin-process.php?action=<?php echo ($action = 'prod_insert'); ?>"
               enctype="multipart/form-data">
             <label for="prod_catid"> Category *</label>
             <div> <select id="prod_catid" name="catid"><?php echo $options; ?></select></div>
@@ -94,11 +97,12 @@ foreach ($res as $value){
             <div id="drop_zone">Drop files here</div>
             <output id="list"></output>
             <input type="submit" value="Submit"/>
+            <input type="hidden" name="nonce" value="<?php echo csrf_getNonce($action)?>">
         </form>
     </fieldset>
     <fieldset>
         <legend> Modify Product</legend>
-        <form id="prod_insert" method="POST" action="admin-process.php?action=prod_edit"
+        <form id="prod_insert" method="POST" action="admin-process.php?action=<?php echo ($action = 'prod_edit'); ?>"
               enctype="multipart/form-data">
             <label for="prod_id"> ProdId</label>
             <div> <input id="prod_id" type="text" name="pid" required="required" pattern="^\d+\.?\d*$"/></div>
@@ -113,24 +117,27 @@ foreach ($res as $value){
             <!--                <label for="prod_image"> Image * </label>-->
             <!--                <div> <input type="file" name="file" required="true" accept="image/jpeg"/> </div>-->
             <input type="submit" value="Submit"/>
+            <input type="hidden" name="nonce" value="<?php echo csrf_getNonce($action)?>">
         </form>
     </fieldset>
     <fieldset>
         <legend> Delete Product</legend>
-        <form id="prod_delete" method="POST" action="admin-process.php?action=prod_delete"
+        <form id="prod_delete" method="POST" action="admin-process.php?action=<?php echo ($action = 'prod_delete'); ?>"
               enctype="multipart/form-data">
             <label for="prod_id"> prodId</label>
             <div> <input id="prod_id" type="text" name="pid" required="required" pattern="^\d+\.?\d*$"/></div>
             <input type="submit" value="Submit" />
+            <input type="hidden" name="nonce" value="<?php echo csrf_getNonce($action)?>">
         </form>
     </fieldset>
     <fieldset>
         <legend> Delete ProductByCatId</legend>
-        <form id="prod_delete" method="POST" action="admin-process.php?action=prod_delete_by_catid"
+        <form id="prod_delete" method="POST" action="admin-process.php?action=<?php echo ($action = 'prod_delete_by_catid'); ?>"
               enctype="multipart/form-data">
             <label for="cate_id"> catId</label>
             <div> <input id="cate_id" type="text" name="catid" required="required" pattern="^\d+\.?\d*$"/></div>
             <input type="submit" value="Submit" />
+            <input type="hidden" name="nonce" value="<?php echo csrf_getNonce($action)?>">
         </form>
     </fieldset>
 </fieldset>

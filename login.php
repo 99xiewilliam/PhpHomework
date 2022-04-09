@@ -63,13 +63,14 @@ $res = ierg4210_cat_fetchall();
     <h1>Login</h1>
     <fieldset>
         <legend> Login in</legend>
-        <form id="cate_edit" method="POST" action="admin-process.php?action=login"
+        <form id="cate_edit" method="POST" action="admin-process.php?action=<?php echo ($action = 'login'); ?>"
               enctype="multipart/form-data">
             <label for="cate_id"> email</label>
-            <div> <input id="cate_id" type="text" name="email" required="required" /></div>
+            <div> <input id="cate_id" type="text" name="email" required="required" pattern="^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$"/></div>
             <label for="cate_name"> password</label>
-            <div><input id="cate_name" type="password" name="pw" required="true" /></div>
+            <div><input id="cate_name" type="password" name="pw" required="true" pattern="^(?=.*\d)(?=.*[a-zA-Z])[\da-zA-Z~!@#$%^&*._?]{8,15}$"/></div>
             <input type="submit" value="Submit" />
+            <input type="hidden" name="nonce" value="<?php echo csrf_getNonce($action)?>">
         </form>
     </fieldset>
 </fieldset>
