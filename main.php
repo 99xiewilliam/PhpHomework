@@ -1,5 +1,9 @@
 <?php
 require __DIR__.'/lib/db.inc.php';
+if (ierg4210_auth() == false) {
+    header('Location: login.php', true, 302);
+    exit();
+}
 $res = ierg4210_cat_fetchall();
 
 $products = '';

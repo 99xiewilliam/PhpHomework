@@ -1,9 +1,10 @@
 <?php
 require __DIR__.'/lib/db.inc.php';
-include_once('auth-process.php');
+//require __DIR__.'/auth-process.php';
+
 if (ierg4210_auth() == false) {
-//    header('Location: login.php', true, 302);
-//    exit();
+    header('Location: login.php', true, 302);
+    exit();
 }
 
 $res = ierg4210_cat_fetchall();
@@ -35,7 +36,7 @@ foreach ($res as $value){
 <head>
     <title>Home</title>
     <meta http-equiv="content-type" content="text/html;charset=utf-8" />
-    <link rel="stylesheet" href="./static/css/common.css" />
+    <!--    <link rel="stylesheet" href="./static/css/common.css" />-->
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script type="text/javascript" src="./static/js/function.js"></script>
