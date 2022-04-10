@@ -303,6 +303,9 @@ function ierg4210_prod_delete(){
 }
 
 function ierg4210_auth() {
+    session_start([
+        'cookie_lifetime' => 86400,
+    ]);
     global $db;
     if (!empty($_SESSION['s4210'])) {
         return $_SESSION['s4210']['em'];
@@ -336,17 +339,22 @@ function ierg4210_auth() {
 
 function csrf_getNonce($action) {
     $nonce = mt_rand() . mt_rand();
+    session_start([
+        'cookie_lifetime' => 86400,
+    ]);
 
     if (!isset($_SESSION['csrf_nonce'])) {
         $_SESSION['csrf_nonce'] = array();
     }
     $_SESSION['csrf_nonce'][$action] = $nonce;
-    echo $nonce;
 
     return $nonce;
 }
 
 function csrf_verifyNonce($action, $receivedNonce) {
+    session_start([
+        'cookie_lifetime' => 86400,
+    ]);
     if (isset($receivedNonce) && $_SESSION['csrf_nonce'][$action] == $receivedNonce) {
         if ($_SESSION['s4210'] == null) {
             unset($_SESSION['csrf_nonce'][$action]);

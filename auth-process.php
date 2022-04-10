@@ -38,6 +38,9 @@ function ierg4210_register() {
 function ierg4210_login() {
     global $db;
     $db = ierg4210_DB();
+    session_start([
+        'cookie_lifetime' => 86400,
+    ]);
 
     if (empty($_POST['email']) || empty($_POST['pw'])
         || !preg_match("/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/", $_POST['email'])
@@ -103,6 +106,9 @@ function ierg4210_login() {
 //}
 
 function ierg4210_logout() {
+    session_start([
+        'cookie_lifetime' => 86400,
+    ]);
     $_SESSION = array();
     if (isset($_COOKIE['s4210'])) {
         setcookie('s4210', '', time() - 1, '/');

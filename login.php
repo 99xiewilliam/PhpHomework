@@ -1,6 +1,8 @@
 <?php
 require __DIR__.'/lib/db.inc.php';
 $res = ierg4210_cat_fetchall();
+$action = 'login';
+$nonce = csrf_getNonce($action);
 //$options = '';
 //echo ($salt = mt_rand()) . "<br/>";
 //echo hash_hmac('sha256', $_REQUEST['password'], $salt);
@@ -53,24 +55,24 @@ $res = ierg4210_cat_fetchall();
 <head>
     <title>Home</title>
     <meta http-equiv="content-type" content="text/html;charset=utf-8" />
-<!--    <link rel="stylesheet" href="./static/css/common.css" />-->
+    <!--    <link rel="stylesheet" href="./static/css/common.css" />-->
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<!--    <script type="text/javascript" src="./static/js/function.js"></script>-->
+    <!--    <script type="text/javascript" src="./static/js/function.js"></script>-->
 </head>
 <body>
 <fieldset>
     <h1>Login</h1>
     <fieldset>
         <legend> Login in</legend>
-        <form id="cate_edit" method="POST" action="admin-process.php?action=<?php echo ($action = 'login'); ?>"
+        <form id="cate_edit" method="POST" action="admin-process.php?action=<?php echo $action; ?>"
               enctype="multipart/form-data">
             <label for="cate_id"> email</label>
             <div> <input id="cate_id" type="text" name="email" required="required" pattern="^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$"/></div>
             <label for="cate_name"> password</label>
             <div><input id="cate_name" type="password" name="pw" required="true" pattern="^(?=.*\d)(?=.*[a-zA-Z])[\da-zA-Z~!@#$%^&*._?]{8,15}$"/></div>
             <input type="submit" value="Submit" />
-            <input type="hidden" name="nonce" value="<?php echo csrf_getNonce($action);?>">
+            <input type="hidden" name="nonce" value="<?php echo $nonce?>">
         </form>
     </fieldset>
 </fieldset>

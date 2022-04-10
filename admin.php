@@ -7,6 +7,9 @@ if (ierg4210_auth() == false) {
     exit();
 }
 
+//$nonce = csrf_verifyNonce($_REQUEST['action'], $_POST['nonce']);
+
+
 $res = ierg4210_cat_fetchall();
 $options = '';
 
