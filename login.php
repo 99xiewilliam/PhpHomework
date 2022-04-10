@@ -65,11 +65,11 @@ $nonce = csrf_getNonce($action);
     <h1>Login</h1>
     <fieldset>
         <legend> Login in</legend>
-        <form id="cate_edit" method="POST" action="admin-process.php?action=<?php echo $action; ?>"
+        <form id="login" method="POST" action="admin-process.php?action=<?php echo $action; ?>"
               enctype="multipart/form-data">
-            <label for="cate_id"> email</label>
+            <label for="email"> email</label>
             <div> <input id="cate_id" type="text" name="email" required="required" pattern="^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$"/></div>
-            <label for="cate_name"> password</label>
+            <label for="password"> password</label>
             <div><input id="cate_name" type="password" name="pw" required="true" pattern="^(?=.*\d)(?=.*[a-zA-Z])[\da-zA-Z~!@#$%^&*._?]{8,15}$"/></div>
             <input type="submit" value="Submit" />
             <input type="hidden" name="nonce" value="<?php echo $nonce?>">

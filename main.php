@@ -99,7 +99,12 @@ while ($index < count($arr_id)) {
             <div id="sumPrice">Total Price: </div>
             <div id="no_goods">
             </div>
-            <input type="button" value="check out">
+<!--            <input type="button" value="check out">-->
+            <form id="cate_insert" method="POST" action="admin-process.php?action=<?php echo ($action = 'logout'); ?>"
+                  enctype="multipart/form-data">
+                <input type="submit" value="check out" />
+                <input type="hidden" name="nonce" value="<?php echo csrf_getNonce($action); ?>">
+            </form>
         </div>
     </div>
 </div>
