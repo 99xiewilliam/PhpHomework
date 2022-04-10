@@ -47,7 +47,13 @@ function ierg4210_login() {
         || !preg_match("/^(?=.*\d)(?=.*[a-zA-Z])[\da-zA-Z~!@#$%^&*._?]{8,15}$/", $_POST['pw'])) {
         throw new Exception('Wrong Credentials');
     }
+
     $email = $_POST['email'];
+    $sanitized = filter_var($email, FILTER_SANITIZE_EMAIL);
+    if (!filter_var($sanitized, FILTER_VALIDATE_EMAIL)) {
+        throw new Exception('Wrong Credentials');
+    }
+
     $pwd = $_POST['pw'];
     $stmt = $db->prepare("SELECT * FROM user WHERE email = (?)");
     $stmt->bind_param('s', $email);
