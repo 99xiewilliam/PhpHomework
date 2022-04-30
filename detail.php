@@ -46,7 +46,7 @@ $decreaseOne = $_GET['pictureid'];
     <script src="https://www.paypal.com/sdk/js?client-id=AVnRk8Ji9MPkY_1d54G0PHbagBCArY-r9xTcw9SHo5xN5C5YFhoNAgva7gtjC08Bx7UlV7Jvm02grfn4&currency=USD"></script>
     <script src="https://www.paypal.com/sdk/js?client-id=AVnRk8Ji9MPkY_1d54G0PHbagBCArY-r9xTcw9SHo5xN5C5YFhoNAgva7gtjC08Bx7UlV7Jvm02grfn4&components=buttons"></script>
     <script type="text/javascript" src="./static/js/jquery.min.js"></script>
-    <script type="text/javascript" src="./static/js/function.js"></script>
+    <script type="text/javascript" src="./myfunction.js"></script>
 </head>
 <body onload="myfunction()">
 <div id="top">
@@ -65,6 +65,109 @@ $decreaseOne = $_GET['pictureid'];
             <div id="sumPrice">Total Price: </div>
             <div id="no_goods">
             </div>
+            <!--            <div class="container">-->
+            <!--                <div class="row">-->
+            <!--                    <div class="col-sm-12 col-md-10 col-md-offset-1">-->
+            <!--                        <table class="table table-hover">-->
+            <!--                            <thead>-->
+            <!--                            <tr>-->
+            <!--                                <th>Product</th>-->
+            <!--                                <th>Quantity</th>-->
+            <!--                                <th class="text-center">Price</th>-->
+            <!--                                <th class="text-center">Total</th>-->
+            <!--                                <th> </th>-->
+            <!--                            </tr>-->
+            <!--                            </thead>-->
+            <!--                            <tbody>-->
+            <!--                            <tr>-->
+            <!--                                <td class="col-sm-8 col-md-6">-->
+            <!--                                    <div class="media">-->
+            <!--                                        <a class="thumbnail pull-left" href="#"> <img class="media-object" src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png" style="width: 72px; height: 72px;"> </a>-->
+            <!--                                        <div class="media-body">-->
+            <!--                                            <h4 class="media-heading"><a href="#">Apple gift card</a></h4>-->
+            <!--                                            <h5 class="media-heading"> by <a href="#">Apple</a></h5>-->
+            <!--                                            <span>Status: </span><span class="text-success"><strong>In Stock</strong></span>-->
+            <!--                                        </div>-->
+            <!--                                    </div></td>-->
+            <!--                                <td class="col-sm-1 col-md-1" style="text-align: center">-->
+            <!--                                    <input type="email" class="form-control" id="exampleInputEmail1" value="3">-->
+            <!--                                </td>-->
+            <!--                                <td class="col-sm-1 col-md-1 text-center"><strong>$10.0</strong></td>-->
+            <!--                                <td class="col-sm-1 col-md-1 text-center"><strong>$30.0</strong></td>-->
+            <!--                                <td class="col-sm-1 col-md-1">-->
+            <!--                                    <button type="button" class="btn btn-danger">-->
+            <!--                                        <span class="glyphicon glyphicon-remove"></span> Remove-->
+            <!--                                    </button></td>-->
+            <!--                            </tr>-->
+            <!--                            <tr>-->
+            <!--                                <td class="col-md-6">-->
+            <!--                                    <div class="media">-->
+            <!--                                        <a class="thumbnail pull-left" href="#"> <img class="media-object" src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png" style="width: 72px; height: 72px;"> </a>-->
+            <!--                                        <div class="media-body">-->
+            <!--                                            <h4 class="media-heading"><a href="#">Google Play gift card</a></h4>-->
+            <!--                                            <h5 class="media-heading"> by <a href="#">Google</a></h5>-->
+            <!--                                            <span>Status: </span><span class="text-success"><strong>In Stock</strong></span>-->
+            <!--                                        </div>-->
+            <!--                                    </div></td>-->
+            <!--                                <td class="col-md-1" style="text-align: center">-->
+            <!--                                    <input type="email" class="form-control" id="exampleInputEmail1" value="2">-->
+            <!--                                </td>-->
+            <!--                                <td class="col-md-1 text-center"><strong>$10.0</strong></td>-->
+            <!--                                <td class="col-md-1 text-center"><strong>$20.0</strong></td>-->
+            <!--                                <td class="col-md-1">-->
+            <!--                                    <button type="button" class="btn btn-danger">-->
+            <!--                                        <span class="glyphicon glyphicon-remove"></span> Remove-->
+            <!--                                    </button></td>-->
+            <!--                            </tr>-->
+            <!--                            <tr>-->
+            <!--                                <td>   </td>-->
+            <!--                                <td>   </td>-->
+            <!--                                <td>   </td>-->
+            <!--                                <td><h5>Subtotal</h5></td>-->
+            <!--                                <td class="text-right"><h5><strong>$50.0</strong></h5></td>-->
+            <!--                            </tr>-->
+            <!--                            <tr>-->
+            <!--                                <td>   </td>-->
+            <!--                                <td>   </td>-->
+            <!--                                <td>   </td>-->
+            <!--                                <td><h3>Total</h3></td>-->
+            <!--                                <td class="text-right"><h3><strong>$50.0</strong></h3></td>-->
+            <!--                            </tr>-->
+            <!--                            <tr>-->
+            <!--                                <td>   </td>-->
+            <!--                                <td>   </td>-->
+            <!--                                <td>   </td>-->
+            <!--                                <td>-->
+            <!--                                <td>-->
+            <!---->
+            <!--                                    <form action="payments.php" method="post" id="form1">-->
+            <!--                                        <input type="hidden" name="cmd" value="_cart" />-->
+            <!--                                        <input type="hidden" name="upload" value="1" />-->
+            <!--                                        <input type="hidden" name="business" value="sb-5dmam5523323@business.example.com" />-->
+            <!--                                        <input type="hidden" name="currency_code" value="HKD" />-->
+            <!--                                        <input type="hidden" name="charset" value="utf-8" />-->
+            <!--                                        <input type="hidden" name="item_name_1" value="Apple gift card" />-->
+            <!--                                        <input type="hidden" name="amount_1" value="10.0" />-->
+            <!--                                        <input type="hidden" name="quantity_1" value="3" />-->
+            <!--                                        <input type="hidden" name="item_name_2" value="Google Play gift card" />-->
+            <!--                                        <input type="hidden" name="amount_2" value="10.0" />-->
+            <!--                                        <input type="hidden" name="quantity_2" value="2" />-->
+            <!--                                        must be unique-->
+            <!---->
+            <!--                                        <input type="hidden" name="custom" value="0" />-->
+            <!--                                        <input type="hidden" name="invoice" value="0" />-->
+            <!---->
+            <!--                                        <input type="submit" class="btn btn-success" form="form1" value="Checkout">-->
+            <!--                                    </form>-->
+            <!--                                    <button type="button" class="btn btn-success" type="submit" form="form1" value="Submit" style = "display: none">-->
+            <!--                                        Checkout <span class="glyphicon glyphicon-play"></span>-->
+            <!--                                    </button></td>-->
+            <!--                            </tr>-->
+            <!--                            </tbody>-->
+            <!--                        </table>-->
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--            </div>-->
             <div id="paypal-button-container"></div>
             <input type="button" value="check out" onclick="">
         </div>
@@ -143,19 +246,19 @@ $decreaseOne = $_GET['pictureid'];
                 <div id="bigMask"></div>
                 <div id="bigImgArea"></div>
             </div>
-<!--            <h1>-->
-<!--                <a class="backward_disabled" id="btnLeft"></a>-->
-<!--                <a class="forward" id="btnRight"></a>-->
-<!--                <div>-->
-<!--                    <ul id="icon_list">-->
-<!--                        <li><img src="./static/images/java1.jpeg" /></li>-->
-<!--                        <li><img src="./static/images/java2.jpeg" /></li>-->
-<!--                        <li><img src="./static/images/java3.jpeg" /></li>-->
-<!--                        <li><img src="./static/images/java4.jpeg" /></li>-->
-<!--                        <li><img src="./static/images/java5.jpeg" /></li>-->
-<!--                    </ul>-->
-<!--                </div>-->
-<!--            </h1>-->
+            <!--            <h1>-->
+            <!--                <a class="backward_disabled" id="btnLeft"></a>-->
+            <!--                <a class="forward" id="btnRight"></a>-->
+            <!--                <div>-->
+            <!--                    <ul id="icon_list">-->
+            <!--                        <li><img src="./static/images/java1.jpeg" /></li>-->
+            <!--                        <li><img src="./static/images/java2.jpeg" /></li>-->
+            <!--                        <li><img src="./static/images/java3.jpeg" /></li>-->
+            <!--                        <li><img src="./static/images/java4.jpeg" /></li>-->
+            <!--                        <li><img src="./static/images/java5.jpeg" /></li>-->
+            <!--                    </ul>-->
+            <!--                </div>-->
+            <!--            </h1>-->
         </div>
         <?php echo $detail ?>
         <ul id="choose">
@@ -170,7 +273,7 @@ $decreaseOne = $_GET['pictureid'];
             <li id="choose_btns" class="clear">
                 <input type="button" value="add to cart" onclick="addCart(<?php echo $addCart?>)">
                 <input type="button" value="decrease one" onclick="decreaseOne(<?php echo $decreaseOne?>)">
-                <input type="button" value="test" onclick="getUserName()">
+                <input type="button" value="test" onclick="saveOrder()">
             </li>
 
         </ul>
@@ -188,7 +291,7 @@ $decreaseOne = $_GET['pictureid'];
                 c_end = document.cookie.indexOf(";", c_start);
                 if (c_end == -1) {
                     c_end = document.cookie.length;
-                    console.log(unescape(document.cookie.substring(c_start, c_end)));
+                    return unescape(document.cookie.substring(c_start, c_end));
                 }
             }
         }
@@ -205,7 +308,45 @@ $decreaseOne = $_GET['pictureid'];
     }
 
     function saveOrder() {
+        let email = getUserName();
+        let sumPrice = 0;
+        let items = [];
+        for (let i = 0; i < localStorage.length; i++) {
+            let key = localStorage.key(i);
+            let obj = JSON.parse(localStorage.getItem(key));
+            if(typeof(obj["name"]) != "undefined"
+                && typeof(obj["count"]) != "undefined"
+                && typeof(obj["price"]) != "undefined") {
+                let item = {pid:obj["pid"], name: obj["name"], price: obj["price"], quantity: obj["count"] };
+                items.push(item);
+                sumPrice += parseInt(obj["price"]) * parseInt(obj["count"]);
+            }
 
+        }
+        console.log(items);
+        let res = JSON.stringify(items);
+        console.log(res);
+        $.ajax({
+            type: "post",
+            url: "/lib/orders.php",
+            data: {currency_code: 'USD', email: email, items: res, sumPrice: sumPrice},
+            dataType: "json",
+            success: function(msg) {
+//                let data = JSON.parse(msg);
+                console.log(msg);
+                // let pid = data["pid"];
+                // localStorage.setItem(pid, JSON.stringify(data));
+                // let goods = document.getElementById("no_goods");
+                // let div = document.createElement("div");
+                // let info = "<div>"+ data["name"] + '[' + data["count"]
+                //     + ']' + '¥' + data["price"] + "</div>" ;
+                // div.innerHTML = info;
+                // goods.appendChild(div);
+            },
+            error: function(msg) {
+                console.log(msg);
+            }
+        })
     }
 
     paypal.Buttons({

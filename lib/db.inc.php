@@ -383,6 +383,33 @@ function csrf_verifyNonce($action, $receivedNonce) {
     return false;
 }
 
+function ierg4210_orderdigest_insert($currency_code, $email, $salt, $items, $sumPrice) {
+    global $db;
+    $db = ierg4210_DB();
+//    $item = "123";
+//    $currency_code = "USD";
+    $email = "2@gmail.com";
+//    $salt = 123;
+//    $sumPrice = 123;
+
+//    if (!preg_match('/^[\w\- ]+$/', $_POST['name'])) {
+//        throw new Exception("invalid-cat-name");
+//    }
+
+//    $stmt=$db->prepare("INSERT INTO products
+//    (catid, name, price, description) VALUES (?, ?, ?, ?)");
+
+
+    $stmt=$db->prepare("INSERT INTO orders (currency_code, email, salt, items, sumprice) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param('ssdsd', $currency_code, $email, $salt, $items, $sumPrice);
+
+    if ($stmt->execute()) {
+//        echo "insert succ";
+        $lastId = $db->insert_id;
+        return $lastId;
+    }
+}
+
 
 
 //function ierg4210_login() {
