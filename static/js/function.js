@@ -3,14 +3,26 @@ function myfunction() {
     goods.innerHTML = '';
     let sumPrice = 0;
     for (let i = 0; i < localStorage.length; i++) {
+
         let key = localStorage.key(i);
         let obj = JSON.parse(localStorage.getItem(key));
         let div = document.createElement("div");
-        let info = "<div>"+ obj["name"] + '[' + obj["count"]
-            + ']' + '¥' + obj["price"] + "</div>";
-        div.innerHTML = info;
-        sumPrice += parseInt(obj["price"]) * parseInt(obj["count"]);
-        goods.appendChild(div);
+        if(typeof(obj["name"]) != "undefined"
+            && typeof(obj["count"]) != "undefined"
+            && typeof(obj["price"]) != "undefined") {
+            let info = "<div>"+ obj["name"] + '[' + obj["count"]
+                + ']' + '¥' + obj["price"] + "</div>";
+            div.innerHTML = info;
+            sumPrice += parseInt(obj["price"]) * parseInt(obj["count"]);
+            goods.appendChild(div);
+        }
+        // if (sumPrice + parseInt(obj["price"]) * parseInt(obj["count"]) == NaN) {
+        //
+        // }else {
+        //     sumPrice += parseInt(obj["price"]) * parseInt(obj["count"]);
+        //     goods.appendChild(div);
+        // }
+
     }
     let sumPriceEle = document.getElementById("sumPrice");
     sumPriceEle.innerHTML = 'Total Price:' + sumPrice;
@@ -99,6 +111,44 @@ function decreaseOne(pid) {
         myfunction();
     }
 }
+
+function checkNumber(theObj) {
+    var reg = /^[0-9]+.?[0-9]*$/;
+    if (reg.test(theObj)) {
+        return true;
+    }
+    return false;
+}
+
+function saveOrder() {
+    $.ajax({
+        type: "post",
+        url: "/lib/addcart.php",
+        data: {pid:pid + ""},
+        dataType: "json",
+        success: function(msg) {
+            let data = JSON.parse(msg);
+            let pid = data["pid"];
+            localStorage.setItem(pid, JSON.stringify(data));
+            let goods = document.getElementById("no_goods");
+            let div = document.createElement("div");
+            let info = "<div>"+ data["name"] + '[' + data["count"]
+                + ']' + '¥' + data["price"] + "</div>" ;
+            div.innerHTML = info;
+            goods.appendChild(div);
+        },
+        error: function(msg) {
+            console.log(msg);
+        }
+    })
+}
+
+function getUserName() {
+    const getCookie = (name) => document.cookie.match(`[;\s+]?${name}=([^;]*)`)?.pop();
+    let a = getCookie("username");
+    console.log(a)
+}
+
 
 
 ///*

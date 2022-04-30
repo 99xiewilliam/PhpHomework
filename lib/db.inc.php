@@ -133,7 +133,6 @@ function ierg4210_cat_insert() {
         echo "insert succ";
         return 1;
     }
-
 }
 
 function ierg4210_cat_edit(){
@@ -302,6 +301,27 @@ function ierg4210_prod_delete(){
     }
 }
 
+function ierg4210_order_insert($currency, $email, $obj, $totalPrice) {
+    global $db;
+    $db = ierg4210_DB();
+
+    if (!preg_match('/^[\w\- ]+$/', $_POST['name'])) {
+        throw new Exception("invalid-cat-name");
+    }
+
+    $name = $_POST["name"];
+//    $stmt=$db->prepare("INSERT INTO products
+//    (catid, name, price, description) VALUES (?, ?, ?, ?)");
+
+    $stmt=$db->prepare("INSERT INTO categories (name) VALUES (?)");
+    $stmt->bind_param('s', $name);
+
+    if ($stmt->execute()) {
+        echo "insert succ";
+        return 1;
+    }
+}
+
 function ierg4210_auth() {
     session_start([
         'cookie_lifetime' => 86400,
@@ -326,7 +346,6 @@ function ierg4210_auth() {
 
             foreach ($res as $value) {
                 $realk = hash_hmac('sha256', $t['exp'].$value['password'], $value['salt']);
-
                 if ($realk == $t['k']) {
                     $_SESSION['s4210'] = $t;
                     return $t['em'];

@@ -41,7 +41,10 @@ $decreaseOne = $_GET['pictureid'];
 <head>
     <title>details</title>
     <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="./static/css/common.css" />
+    <script src="https://www.paypal.com/sdk/js?client-id=AVnRk8Ji9MPkY_1d54G0PHbagBCArY-r9xTcw9SHo5xN5C5YFhoNAgva7gtjC08Bx7UlV7Jvm02grfn4&currency=USD"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=AVnRk8Ji9MPkY_1d54G0PHbagBCArY-r9xTcw9SHo5xN5C5YFhoNAgva7gtjC08Bx7UlV7Jvm02grfn4&components=buttons"></script>
     <script type="text/javascript" src="./static/js/jquery.min.js"></script>
     <script type="text/javascript" src="./static/js/function.js"></script>
 </head>
@@ -62,7 +65,8 @@ $decreaseOne = $_GET['pictureid'];
             <div id="sumPrice">Total Price: </div>
             <div id="no_goods">
             </div>
-            <input type="button" value="check out">
+            <div id="paypal-button-container"></div>
+            <input type="button" value="check out" onclick="">
         </div>
     </div>
 </div>
@@ -70,7 +74,7 @@ $decreaseOne = $_GET['pictureid'];
 <!-- nav -->
 <div id="nav">
     <div id="category">
-        <div id="cate_mt" onmouseover="showElementById('all_cate',true);"  onmouseout= z"showElementById('all_cate',false);">
+        <div id="cate_mt" onmouseover="showElementById('all_cate',true);"  onmouseout= "showElementById('all_cate',false);">
             <a href="#">all categories</a>
             <span></span>
         </div>
@@ -166,11 +170,100 @@ $decreaseOne = $_GET['pictureid'];
             <li id="choose_btns" class="clear">
                 <input type="button" value="add to cart" onclick="addCart(<?php echo $addCart?>)">
                 <input type="button" value="decrease one" onclick="decreaseOne(<?php echo $decreaseOne?>)">
+                <input type="button" value="test" onclick="getUserName()">
             </li>
 
         </ul>
     </div>
 
 </div>
+
+<script>
+    function getUserName() {
+        if (document.cookie.length > 0) {
+            c_start = document.cookie.indexOf("y_email=");
+            console.log(c_start);
+            if (c_start != -1) {
+                c_start = c_start + 8;
+                c_end = document.cookie.indexOf(";", c_start);
+                if (c_end == -1) {
+                    c_end = document.cookie.length;
+                    console.log(unescape(document.cookie.substring(c_start, c_end)));
+                }
+            }
+        }
+    }
+    /* A function to simulate the communication with server */
+    function getFromServer(obj) {
+        return new Promise(resolve => {
+            setTimeout(() => {
+                resolve(JSON.stringify({
+                    purchase_units: obj
+                }));
+            }, 100);
+        });
+    }
+
+    function saveOrder() {
+
+    }
+
+    paypal.Buttons({
+        /* Sets up the transaction when a payment button is clicked */
+        createOrder: async (data, actions) => { /* async is required to use await in a function */
+            /* Use AJAX to get required data from the server; For dev/demo purposes: */
+            let sumPrice = 0;
+            let items = [];
+            for (let i = 0; i < localStorage.length; i++) {
+                let key = localStorage.key(i);
+                let obj = JSON.parse(localStorage.getItem(key));
+                if(typeof(obj["name"]) != "undefined"
+                    && typeof(obj["count"]) != "undefined"
+                    && typeof(obj["price"]) != "undefined") {
+                    let item = {name: obj["name"], unit_amount: { currency_code: 'USD', value: obj["price"] }, quantity: obj["count"] };
+                    items.push(item);
+                    sumPrice += parseInt(obj["price"]) * parseInt(obj["count"]);
+                }
+
+            }
+            let amount = {currency_code: 'USD', value: sumPrice, breakdown: { item_total: { currency_code: 'USD', value: sumPrice } }}
+
+            let dataObj = [{
+                amount: amount,
+                // custom_id: "aabbccddeeff",  /* digest */
+                // invoice_id: "001122334455", /* lastInsertId(); must be unique to avoid blocking */
+                items: items
+            }];
+            let order_details = await getFromServer(dataObj)
+                .then(data => JSON.parse(data));
+
+            /* Use fetch() instead in real code to get server resources */
+            // let order_details = await fetch(/* resource url*/)
+            //     .then(response => response.json()) /* json string to javascript object */
+            //     .then(data => {
+            //         /* process over data */
+            //         return /* return value */;
+            //     });
+
+            return actions.order.create(order_details);
+        },
+
+        /* Finalize the transaction after payer approval */
+        onApprove: (data, actions) => {
+            return actions.order.capture().then(function (orderData) {
+                /* Successful capture! For dev/demo purposes: */
+                console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+                const transaction = orderData.purchase_units[0].payments.captures[0];
+                alert(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details`);
+
+                /* When ready to go live, remove the alert and show a success message within this page. For example: */
+                // const element = document.getElementById('paypal-button-container');
+                // element.innerHTML = '<h3>Thank you for your payment!</h3>';
+                /* Or go to another URL:  */
+                // actions.redirect('thank_you.html');
+            });
+        },
+    }).render('#paypal-button-container');
+</script>
 </body>
 </html>
