@@ -46,7 +46,7 @@ $decreaseOne = $_GET['pictureid'];
     <script src="https://www.paypal.com/sdk/js?client-id=AVnRk8Ji9MPkY_1d54G0PHbagBCArY-r9xTcw9SHo5xN5C5YFhoNAgva7gtjC08Bx7UlV7Jvm02grfn4&currency=USD"></script>
     <script src="https://www.paypal.com/sdk/js?client-id=AVnRk8Ji9MPkY_1d54G0PHbagBCArY-r9xTcw9SHo5xN5C5YFhoNAgva7gtjC08Bx7UlV7Jvm02grfn4&components=buttons"></script>
     <script type="text/javascript" src="./static/js/jquery.min.js"></script>
-    <script type="text/javascript" src="./myfunction.js"></script>
+    <script type="text/javascript" src="./functions.js"></script>
 </head>
 <body onload="myfunction()">
 <div id="top">
@@ -169,7 +169,7 @@ $decreaseOne = $_GET['pictureid'];
             <!--                </div>-->
             <!--            </div>-->
             <div id="paypal-button-container"></div>
-            <input type="button" value="check out" onclick="">
+            <input type="button" value="click before paypal" onclick="saveOrder()">
         </div>
     </div>
 </div>
@@ -273,7 +273,7 @@ $decreaseOne = $_GET['pictureid'];
             <li id="choose_btns" class="clear">
                 <input type="button" value="add to cart" onclick="addCart(<?php echo $addCart?>)">
                 <input type="button" value="decrease one" onclick="decreaseOne(<?php echo $decreaseOne?>)">
-                <input type="button" value="test" onclick="saveOrder()">
+
             </li>
 
         </ul>
@@ -313,7 +313,13 @@ $decreaseOne = $_GET['pictureid'];
         let items = [];
         for (let i = 0; i < localStorage.length; i++) {
             let key = localStorage.key(i);
-            let obj = JSON.parse(localStorage.getItem(key));
+            let obj = '';
+            try {
+                obj = JSON.parse(localStorage.getItem(key));
+            } catch (error) {
+                continue;
+            }
+
             if(typeof(obj["name"]) != "undefined"
                 && typeof(obj["count"]) != "undefined"
                 && typeof(obj["price"]) != "undefined") {
@@ -334,6 +340,15 @@ $decreaseOne = $_GET['pictureid'];
             success: function(msg) {
 //                let data = JSON.parse(msg);
                 console.log(msg);
+                console.log(msg["invoice"]);
+                console.log(msg["digest"]);
+                localStorage.setItem("invoice",msg["invoice"]);
+                localStorage.setItem("digest", msg["digest"]);
+                // return {
+                //     invoice: msg["invoice"],
+                //     digest: msg["digest"]
+                // }
+
                 // let pid = data["pid"];
                 // localStorage.setItem(pid, JSON.stringify(data));
                 // let goods = document.getElementById("no_goods");
@@ -357,7 +372,12 @@ $decreaseOne = $_GET['pictureid'];
             let items = [];
             for (let i = 0; i < localStorage.length; i++) {
                 let key = localStorage.key(i);
-                let obj = JSON.parse(localStorage.getItem(key));
+                let obj = '';
+                try {
+                    obj = JSON.parse(localStorage.getItem(key));
+                } catch (error) {
+                    continue;
+                }
                 if(typeof(obj["name"]) != "undefined"
                     && typeof(obj["count"]) != "undefined"
                     && typeof(obj["price"]) != "undefined") {
@@ -367,12 +387,15 @@ $decreaseOne = $_GET['pictureid'];
                 }
 
             }
+            saveOrder();
+            let digest = localStorage.getItem("digest");
+            let invoice = localStorage.getItem("invoice");
             let amount = {currency_code: 'USD', value: sumPrice, breakdown: { item_total: { currency_code: 'USD', value: sumPrice } }}
 
             let dataObj = [{
                 amount: amount,
-                // custom_id: "aabbccddeeff",  /* digest */
-                // invoice_id: "001122334455", /* lastInsertId(); must be unique to avoid blocking */
+                custom_id: digest,  /* digest */
+                invoice_id: invoice, /* lastInsertId(); must be unique to avoid blocking */
                 items: items
             }];
             let order_details = await getFromServer(dataObj)
@@ -395,13 +418,14 @@ $decreaseOne = $_GET['pictureid'];
                 /* Successful capture! For dev/demo purposes: */
                 console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
                 const transaction = orderData.purchase_units[0].payments.captures[0];
-                alert(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details`);
+                //alert(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details`);
 
                 /* When ready to go live, remove the alert and show a success message within this page. For example: */
-                // const element = document.getElementById('paypal-button-container');
-                // element.innerHTML = '<h3>Thank you for your payment!</h3>';
+                const element = document.getElementById('paypal-button-container');
+                element.innerHTML = '<h3>Thank you for your payment!</h3>';
+                localStorage.clear();
                 /* Or go to another URL:  */
-                // actions.redirect('thank_you.html');
+                //actions.redirect('./payment-success.html');
             });
         },
     }).render('#paypal-button-container');

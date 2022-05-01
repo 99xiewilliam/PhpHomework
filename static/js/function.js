@@ -5,7 +5,12 @@ function myfunction() {
     for (let i = 0; i < localStorage.length; i++) {
 
         let key = localStorage.key(i);
-        let obj = JSON.parse(localStorage.getItem(key));
+        let obj = '';
+        try {
+            obj = JSON.parse(localStorage.getItem(key));
+        } catch (error) {
+            continue;
+        }
         let div = document.createElement("div");
         if(typeof(obj["name"]) != "undefined"
             && typeof(obj["count"]) != "undefined"
