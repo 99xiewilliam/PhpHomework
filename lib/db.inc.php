@@ -456,6 +456,18 @@ function ierg4210_order_fetchall() {
 
 }
 
+function ierg4210_order_limit($name) {
+    // DB manipulation
+    global $db;
+    $db = ierg4210_DB();
+    $sql = "SELECT * FROM orders WHERE email = (?) ORDER BY id DESC LIMIT 5;";
+    $stmt = $db->prepare($sql);
+    $stmt->bind_param('s', $name);
+    $stmt->execute();
+    return $stmt->get_result();
+
+}
+
 
 
 //function ierg4210_login() {
