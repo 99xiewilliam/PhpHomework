@@ -388,9 +388,10 @@ function ierg4210_orderdigest_insert($currency_code, $email, $salt, $items, $sum
     $db = ierg4210_DB();
 //    $item = "123";
 //    $currency_code = "USD";
-    $email = "2@gmail.com";
+//    $email = "2@gmail.com";
 //    $salt = 123;
 //    $sumPrice = 123;
+    $paymentstate = "false";
 
 //    if (!preg_match('/^[\w\- ]+$/', $_POST['name'])) {
 //        throw new Exception("invalid-cat-name");
@@ -400,13 +401,42 @@ function ierg4210_orderdigest_insert($currency_code, $email, $salt, $items, $sum
 //    (catid, name, price, description) VALUES (?, ?, ?, ?)");
 
 
-    $stmt=$db->prepare("INSERT INTO orders (currency_code, email, salt, items, sumprice) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param('ssdsd', $currency_code, $email, $salt, $items, $sumPrice);
+    $stmt=$db->prepare("INSERT INTO orders (currency_code, email, salt, items, sumprice, paymentstate) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param('ssdsds', $currency_code, $email, $salt, $items, $sumPrice, $paymentstate);
+
+
 
     if ($stmt->execute()) {
 //        echo "insert succ";
         $lastId = $db->insert_id;
         return $lastId;
+    }
+}
+
+function ierg4210_orderdigest_update($id) {
+    global $db;
+    $db = ierg4210_DB();
+//    $item = "123";
+//    $currency_code = "USD";
+//    $email = "2@gmail.com";
+//    $salt = 123;
+//    $sumPrice = 123;
+    $paymentstate = "true";
+
+//    if (!preg_match('/^[\w\- ]+$/', $_POST['name'])) {
+//        throw new Exception("invalid-cat-name");
+//    }
+
+//    $stmt=$db->prepare("INSERT INTO products
+//    (catid, name, price, description) VALUES (?, ?, ?, ?)");
+    $stmt = $db->prepare("UPDATE orders SET paymentstate = (?) WHERE id = (?)");
+    $stmt->bind_param('ss', $paymentstate, $id);
+//    $stmt=$db->prepare("INSERT INTO orders (currency_code, email, salt, items, sumprice, paymentstate) VALUES (?, ?, ?, ?, ?, ?)");
+//    $stmt->bind_param('ssdsds', $currency_code, $email, $salt, $items, $sumPrice, $paymentstate);
+
+    if ($stmt->execute()) {
+//        echo "insert succ";
+        return 1;
     }
 }
 

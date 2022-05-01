@@ -26,7 +26,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     echo json_encode(array(
         "invoice" => $invoice,
-        "digest" => $digest
+        "digest" => $digest,
+        "orderid" => $lastId
     ));
 }
 ?>

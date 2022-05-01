@@ -169,7 +169,7 @@ $decreaseOne = $_GET['pictureid'];
             <!--                </div>-->
             <!--            </div>-->
             <div id="paypal-button-container"></div>
-            <input type="button" value="click before paypal" onclick="saveOrder()">
+<!--            <input type="button" value="click before paypal" onclick="saveOrder()">-->
         </div>
     </div>
 </div>
@@ -273,7 +273,7 @@ $decreaseOne = $_GET['pictureid'];
             <li id="choose_btns" class="clear">
                 <input type="button" value="add to cart" onclick="addCart(<?php echo $addCart?>)">
                 <input type="button" value="decrease one" onclick="decreaseOne(<?php echo $decreaseOne?>)">
-
+<!--                <input type="button" value="test" onclick="testorder()">-->
             </li>
 
         </ul>
@@ -282,6 +282,22 @@ $decreaseOne = $_GET['pictureid'];
 </div>
 
 <script>
+    // function testorder() {
+    //     let $orderid = localStorage.getItem("orderid");
+    //     console.log($orderid);
+    //     $.ajax({
+    //         type: "post",
+    //         url: "/lib/updateOrder.php",
+    //         data: {orderid: $orderid},
+    //         dataType: "json",
+    //         success: function(msg) {
+    //             console.log(msg);
+    //         },
+    //         error: function(msg) {
+    //             console.log(msg);
+    //         }
+    //     });
+    // }
     function getUserName() {
         if (document.cookie.length > 0) {
             c_start = document.cookie.indexOf("y_email=");
@@ -344,6 +360,7 @@ $decreaseOne = $_GET['pictureid'];
                 console.log(msg["digest"]);
                 localStorage.setItem("invoice",msg["invoice"]);
                 localStorage.setItem("digest", msg["digest"]);
+                localStorage.setItem("orderid", msg["orderid"]);
                 // return {
                 //     invoice: msg["invoice"],
                 //     digest: msg["digest"]
@@ -423,7 +440,20 @@ $decreaseOne = $_GET['pictureid'];
                 /* When ready to go live, remove the alert and show a success message within this page. For example: */
                 const element = document.getElementById('paypal-button-container');
                 element.innerHTML = '<h3>Thank you for your payment!</h3>';
-                localStorage.clear();
+                let $orderid = localStorage.getItem("orderid");
+                $.ajax({
+                    type: "post",
+                    url: "/lib/updateOrder.php",
+                    data: {orderid: $orderid},
+                    dataType: "json",
+                    success: function(msg) {
+                        console.log(msg);
+                        localStorage.clear();
+                    },
+                    error: function(msg) {
+                        console.log(msg);
+                    }
+                });
                 /* Or go to another URL:  */
                 //actions.redirect('./payment-success.html');
             });
