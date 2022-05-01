@@ -42,8 +42,31 @@ foreach ($res as $value){
     <!--    <link rel="stylesheet" href="./static/css/common.css" />-->
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script type="text/javascript" src="./static/js/function.js"></script>
+    <script type="text/javascript" src="./functions.js"></script>
+    <style>
+        table {
+            border-collapse: collapse;
+            margin-top: 200px;
+            margin-left: 500px;
+        }
+        table th{
+            border: 1px solid black;
+            width: 80px;
+            height: 40px;
+            text-align: center;
+            background-color: cornsilk;
+        }
 
+        table td{
+
+            border: 1px solid black;
+            width: 80px;
+            height: 40px;
+            text-align: center;
+
+        }
+
+    </style>
 </head>
 <body>
 <fieldset>
@@ -144,7 +167,97 @@ foreach ($res as $value){
         </form>
     </fieldset>
 </fieldset>
+
+<input type="button" onclick="getTable()" value="show table">
+<div>
+    <table>
+        <thead>
+        <tr>
+            <th>email</th>
+            <th>items</th>
+            <th>sumprice</th>
+            <th>paymentstate</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+<!--    <div class="modal-content">-->
+<!--        <div class="modal-header">-->
+<!--            <h4 class="modal-title" id="myModalLabel">订单</h4>-->
+<!--        </div>-->
+<!--        <div class="modal-body">-->
+<!--            <div class="table-responsive">-->
+<!--                <table class="table table-striped" id="shoppingCart">-->
+<!--                    <thead>-->
+<!--                    <tr>-->
+<!--                        <th>email</th>-->
+<!--                        <th>items</th>-->
+<!--                        <th>sumprice</th>-->
+<!--                        <th>paymentstate</th>-->
+<!--                    </tr>-->
+<!--                    </thead>-->
+<!--                    <tbody></tbody>-->
+<!--                </table>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!-- /.modal-content -->
+
+
 <script>
+    function getTable() {
+        let datas = [
+
+        ];
+        $.ajax({
+            type: "post",
+            url: "/lib/getTable.php",
+            data: {},
+            dataType: "json",
+            success: function(msg) {
+//                let data = JSON.parse(msg);
+                console.log(msg);
+                //创建行，有几个人就创建几行
+                datas = msg;
+                let tbody =document.querySelector('tbody')
+                for(let i = 0 ; i < datas.length ; i++){
+                    //创建行
+                    let tr = document.createElement('tr');
+                    tbody.appendChild(tr);
+                    //创建单元格
+                    console.log(datas[i]);
+//                    console.log(JSON.parse(datas[i]));
+                    let ob = JSON.parse(datas[i]);
+                    console.log(ob["items"]);
+                    console.log(ob);
+                    let count = 0;
+                    for (let k in ob ){
+                        if (k == "items") {
+                            let td = document.createElement("td");
+                            td.innerText = JSON.stringify(ob[k]);
+                            tr.appendChild(td);
+                        }else {
+                            let td = document.createElement("td");
+                            td.innerText = ob[k];
+                            tr.appendChild(td);
+                        }
+
+                        count++;
+                    }
+                }
+            },
+            error: function(msg) {
+                console.log(msg);
+            }
+        })
+
+
+
+
+    }
     $("#img_input").on("change", function(e) {
 
         var file = e.target.files[0]; //获取图片资源
@@ -169,6 +282,10 @@ foreach ($res as $value){
     var dropZone = document.getElementById('drop_zone');
     dropZone.addEventListener('dragover', handleDragOver, false);
     dropZone.addEventListener('drop', handleFileSelect, false);
+
+
+
+
 </script>
 </body>
 

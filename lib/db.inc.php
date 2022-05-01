@@ -440,6 +440,22 @@ function ierg4210_orderdigest_update($id) {
     }
 }
 
+function ierg4210_order_fetchall() {
+    // DB manipulation
+    global $db;
+    $db = ierg4210_DB();
+    $sql = "SELECT * FROM orders;";
+    $stmt = $db->prepare($sql);
+    $stmt->execute();
+    return $stmt->get_result();
+//    $result = $db->query($sql);
+//    if ($result->num_rows > 0) {
+//        //如果return $result->fetch_array()会有问题（admin.php会无限循环）不过我还没找到是什么原因
+//        return $result;
+//    }
+
+}
+
 
 
 //function ierg4210_login() {
