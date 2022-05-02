@@ -72,7 +72,7 @@ function ierg4210_login() {
                 'k' => hash_hmac('sha256', $exp.$value['password'], $value['salt'])
             );
             setcookie('s4210', json_encode($token), $exp, '', '', true, true);
-//            setcookie('username', $email, $exp, '', '', true, true);
+            setcookie('y_email', $email, time() + 3600 * 24 * 3, "/");
             $_SESSION['s4210'] = $token;
             $login_success =  true;
         }
