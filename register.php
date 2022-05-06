@@ -1,6 +1,8 @@
 <?php
 require __DIR__.'/lib/db.inc.php';
 $res = ierg4210_cat_fetchall();
+$action = 'register';
+$nonce = csrf_getNonce($action);
 //$options = '';
 //echo ($salt = mt_rand()) . "<br/>";
 //echo hash_hmac('sha256', $_REQUEST['password'], $salt);
@@ -63,14 +65,18 @@ $res = ierg4210_cat_fetchall();
     <h1>Register</h1>
     <fieldset>
         <legend> Register</legend>
-        <form id="cate_edit" method="POST" action="admin-process.php?action=register"
+        <form id="cate_edit" method="POST" action="admin-process.php?action=<?php echo $action; ?>"
               enctype="multipart/form-data">
             <label for="cate_id"> email</label>
             <div> <input id="cate_id" type="text" name="email" required="required" /></div>
             <label for="cate_name"> password</label>
             <div><input id="cate_name" type="password" name="pw" required="true" /></div>
+            <div>admin:<input type="radio" name="actor" value=1>admin</div>
+            <div>normal:<input type="radio" name="actor" value=0>normal</div>
             <input type="submit" value="Submit" />
+            <input type="hidden" name="nonce" value="<?php echo $nonce?>">
         </form>
+        <a href="./login.php"> login </a>
     </fieldset>
 </fieldset>
 </body>

@@ -22,9 +22,10 @@ function ierg4210_register() {
     $email = $_POST['email'];
     $pwd = $_POST['pw'];
     $salt = mt_rand();
-    $flag = 1;
+    $flag = $_POST['actor'];;
+    echo $_POST['actor'];
     $saltPassword = hash_hmac('sha256', $pwd, $salt);
-    echo "xiaoxinxin" ."<br>";
+//    echo "xiaoxinxin" ."<br>";
 
     $stmt = $db->prepare("INSERT INTO user (email, password, salt, flag) VALUES (?, ?, ?, ?)");
     $stmt->bind_param('ssdd', $email, $saltPassword, $salt, $flag);
