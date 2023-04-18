@@ -53,7 +53,7 @@ $nonce = csrf_getNonce($action);
 
 <html>
 <head>
-    <title>Home</title>
+    <title>Home123</title>
     <meta http-equiv="content-type" content="text/html;charset=utf-8" />
     <!--    <link rel="stylesheet" href="./static/css/common.css" />-->
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css">
